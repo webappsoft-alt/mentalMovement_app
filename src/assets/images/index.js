@@ -1,0 +1,16 @@
+export {default as AppLogo} from '../images/AppLogo.svg';
+export {default as FbLogin} from '../images/FbLogin.svg';
+export {default as Infor} from '../images/Infor.svg';
+export {default as BackArrow} from '../images/BackArrow.svg';
+export {default as CoachingBottom} from '../images/CoachingBottom.svg';
+export {default as Cross} from '../images/Cross.svg';
+export {default as Drawer} from '../images/Drawer.svg';
+export {default as Email} from '../images/Email.svg';
+export {default as ExploreBottom} from '../images/ExploreBottom.svg';
+export {default as HomeBottom} from '../images/HomeBottom.svg';
+export {default as SelfEsteemCardPlayer} from '../images/SelfEsteemCardPlayer.svg';
+export {default as ProfileBottom} from '../images/ProfileBottom.svg';
+export {default as Users} from '../images/Users.svg';
+export {default as Heart} from '../images/Heart.svg';
+export {default as PauseSvg} from '../images/PauseSvg.svg';
+export {default as PlaySvg} from '../images/PlaySvg.svg';

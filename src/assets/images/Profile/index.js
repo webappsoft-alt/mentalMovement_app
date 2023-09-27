@@ -1,0 +1,12 @@
+export {default as About} from '../Profile/About.svg';
+export {default as Change} from '../Profile/Change.svg';
+export {default as Download} from '../Profile/Download.svg';
+export {default as Edit} from '../Profile/Edit.svg';
+export {default as Terms} from '../Profile/Terms.svg';
+export {default as Start} from '../Profile/Start.svg';
+export {default as Reminder} from '../Profile/Reminder.svg';
+export {default as Privacy} from '../Profile/Privacy.svg';
+export {default as Notification} from '../Profile/Notification.svg';
+export {default as Manage} from '../Profile/Manage.svg';
+export {default as Help} from '../Profile/Help.svg';
+export {default as Google} from '../Profile/Google.svg';

@@ -1,0 +1,24 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:editTextBackground">@android:color/transparent</item>
+    </style>
+  <!-- BootTheme should inherit from Theme.BootSplash or Theme.BootSplash.EdgeToEdge -->
+  <style name="BootTheme" parent="Theme.BootSplash">
+    <!-- <item name="bootSplashBackground">@color/bootsplash_background</item> -->
+    <item name="android:windowBackground">@drawable/splashscreen</item>
+
+    <item name="postBootSplashTheme">@style/AppTheme</item>
+  </style>
+
+
+  
+<string name="facebook_app_id">995157451740357</string>
+<string name="fb_login_protocol_scheme">fb1234</string>
+<string name="facebook_client_token">9c1e735459f4634e0f0b46efc903de66</string>
+
+
+</resources>
+
+
