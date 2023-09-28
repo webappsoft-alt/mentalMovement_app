@@ -60,7 +60,8 @@ const AppStack = () => {
   return (
     <ImageBackground
       source={require('../assets/images/png/start_img.png')}
-      style={{ flex: 1 }}>
+      style={{ flex: 1 }}
+      >
       <Tab.Navigator
         screenOptions={{
           headerShown: false,

@@ -13,6 +13,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1A6BFB37AD974A4C987A9C88 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EFBCD8FDBFAA4A4AA38A2C85 /* Inter-Regular.ttf */; };
+		1CB4719A2AC4F83500A661A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CB471992AC4F83500A661A8 /* GoogleService-Info.plist */; };
+		1CB4719C2AC4F84300A661A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4719B2AC4F84300A661A8 /* GoogleService-Info.plist */; };
 		1EACE10D5D3C4164AEC180E7 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDDB16C5151346A5B6713A92 /* Inter-Black.ttf */; };
 		380129E0ADC8426B869032EE /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4F59093238E4B72B86D275F /* Inter-ExtraLight.ttf */; };
 		3A53BE941BEFE53ED6BCB44B /* Pods_MentalM_MentalMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6162853EA1258C77783AAA16 /* Pods_MentalM_MentalMTests.framework */; };
@@ -41,7 +43,6 @@
 		976FF0D22ABC295800339962 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 976FF0BF2ABC295700339962 /* SimpleLineIcons.ttf */; };
 		976FF0D32ABC295800339962 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 976FF0C02ABC295700339962 /* FontAwesome6_Brands.ttf */; };
 		976FF0D42ABC295800339962 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 976FF0C12ABC295700339962 /* MaterialIcons.ttf */; };
-		978E86262AC154F700FA1290 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 978E86252AC154F700FA1290 /* GoogleService-Info.plist */; };
 		9F8FC138503B404F9D1936C9 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9771048E49CB4D0D92418913 /* Inter-Thin.ttf */; };
 		B6FAC4BA135C4C01B222A509 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90FA9328EB1D49AEB766D36C /* Inter-SemiBold.ttf */; };
 		C237A81C0DE946E9A2315181 /* timesromanbold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75DF092017404259B5E184C8 /* timesromanbold.ttf */; };
@@ -68,6 +69,8 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MentalM/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MentalM/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MentalM/main.m; sourceTree = "<group>"; };
+		1CB471992AC4F83500A661A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1CB4719B2AC4F84300A661A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-MentalM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MentalM.debug.xcconfig"; path = "Target Support Files/Pods-MentalM/Pods-MentalM.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-MentalM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MentalM.release.xcconfig"; path = "Target Support Files/Pods-MentalM/Pods-MentalM.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-MentalM-MentalMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MentalM-MentalMTests.debug.xcconfig"; path = "Target Support Files/Pods-MentalM-MentalMTests/Pods-MentalM-MentalMTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -102,7 +105,6 @@
 		976FF0C02ABC295700339962 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		976FF0C12ABC295700339962 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		9771048E49CB4D0D92418913 /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
-		978E86252AC154F700FA1290 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BB2BEA9A9AFD4657BC98E021 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
 		BDDB16C5151346A5B6713A92 /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../src/assets/fonts/Inter-Black.ttf"; sourceTree = "<group>"; };
 		D4F59093238E4B72B86D275F /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				1CB4719B2AC4F84300A661A8 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -186,7 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				976597202AC2D28800B45367 /* File.swift */,
-				978E86252AC154F700FA1290 /* GoogleService-Info.plist */,
+				1CB471992AC4F83500A661A8 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* MentalM */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MentalMTests */,
@@ -368,7 +371,7 @@
 				976FF0CB2ABC295800339962 /* Ionicons.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				1EACE10D5D3C4164AEC180E7 /* Inter-Black.ttf in Resources */,
-				978E86262AC154F700FA1290 /* GoogleService-Info.plist in Resources */,
+				1CB4719A2AC4F83500A661A8 /* GoogleService-Info.plist in Resources */,
 				654CABA168A840948A972147 /* Inter-Bold.ttf in Resources */,
 				5A56C34EF9DE4B289FF18AF0 /* Inter-ExtraBold.ttf in Resources */,
 				976FF0D32ABC295800339962 /* FontAwesome6_Brands.ttf in Resources */,
@@ -389,6 +392,7 @@
 				9F8FC138503B404F9D1936C9 /* Inter-Thin.ttf in Resources */,
 				8DD0AD0A22474D3EA99E1C5C /* regularroman.ttf in Resources */,
 				976FF0C22ABC295800339962 /* Fontisto.ttf in Resources */,
+				1CB4719C2AC4F84300A661A8 /* GoogleService-Info.plist in Resources */,
 				976FF0D22ABC295800339962 /* SimpleLineIcons.ttf in Resources */,
 				976FF0CE2ABC295800339962 /* FontAwesome.ttf in Resources */,
 				C237A81C0DE946E9A2315181 /* timesromanbold.ttf in Resources */,
@@ -651,8 +655,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MentalM/MentalM.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = PLT3993K87;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MentalM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -667,6 +675,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mentalmovement.app;
 				PRODUCT_NAME = MentalM;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Mental Movement";
 				SWIFT_OBJC_BRIDGING_HEADER = "MentalM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -681,8 +691,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MentalM/MentalM.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = PLT3993K87;
 				INFOPLIST_FILE = MentalM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -696,6 +710,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mentalmovement.app;
 				PRODUCT_NAME = MentalM;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Mental Movement";
 				SWIFT_OBJC_BRIDGING_HEADER = "MentalM-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
