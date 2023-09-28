@@ -26,8 +26,8 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
   }, []);
   const googlePay = {
     googlePay: {
-      testEnv: true,
-      merchantName: 'My merchant name',
+      testEnv: false,
+      merchantName: 'Mental Movement',
       merchantCountryCode: 'US',
       currencyCode: 'USD',
       amount: selected == '1' ? 6.99 : 69.99,
@@ -43,7 +43,7 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
     applePay: {
       cartItems: [
         {
-          label: 'Example item name',
+          label: selected == '1' ? 'Monthly Package' : 'Yearly Package',
           amount: selected == '1' ? '6.99' : '69.99',
           paymentType: PlatformPay.PaymentType.Immediate,
         },

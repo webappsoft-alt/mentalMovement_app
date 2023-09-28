@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import RootNavigation from './src/navigations';
 
 import RNBootSplash from 'react-native-bootsplash';
-import {I18nextProvider} from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n'; // Import your i18n configuration
-import {RootSiblingParent} from 'react-native-root-siblings';
-import {StripeProvider} from '@stripe/stripe-react-native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { RootSiblingParent } from 'react-native-root-siblings';
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 const App = () => {
   useEffect(() => {
     GoogleSignin.configure({
@@ -22,8 +22,7 @@ const App = () => {
 
   return (
     <StripeProvider
-      publishableKey="pk_test_jiq9i56R2r9QvRxJuYWRgkeY00RDbpS355"
-      urlScheme="your-url-scheme"
+      publishableKey="pk_live_pWqwswME1ZEqhn34enw1jH5M00iNk9XRQq"
       merchantIdentifier="merchant.com.mentalmovement.appovement" // required for Apple Pay
     >
       <RootSiblingParent>
