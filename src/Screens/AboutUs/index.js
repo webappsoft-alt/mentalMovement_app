@@ -6,17 +6,17 @@ import {
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-const Coaching = () => {
+const AboutUs = () => {
   const webviewBackgroundColorScript = `
   const style = document.createElement('style');
   style.innerHTML = 'body { background-color: black !important; }';
   document.head.appendChild(style);
 `;
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingTop: getStatusBarHeight(), paddingBottom: Platform.OS == 'ios' ? 0 : getStatusBarHeight() + 30, paddingHorizontal: 16 }}>
+    <View style={{ flex: 1, backgroundColor: 'black', paddingHorizontal: 16 }}>
       <WebView
         source={{
-          uri: 'https://www.mental-movement.de/high-performance-coaching/',
+          uri: 'https://www.mental-movement.de/keynote-speaker/',
         }}
         style={{
           flex: 1,
@@ -29,6 +29,6 @@ const Coaching = () => {
   );
 };
 
-export default Coaching;
+export default AboutUs;
 
 const styles = StyleSheet.create({});

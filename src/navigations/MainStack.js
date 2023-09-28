@@ -25,6 +25,10 @@ import ExploreTraning from '../Screens/ExploreTraning/ExploreTraning';
 import Coaching from '../Screens/Coaching';
 import { useTranslation } from 'react-i18next';
 import PaymentScreen from '../Screens/PaymentScreen';
+import AboutUs from '../Screens/AboutUs';
+import Downloads from '../Screens/Downloads';
+import Privacy from '../Screens/Privacy';
+import Terms from '../Screens/Terms';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const MainStack = () => {
@@ -37,11 +41,15 @@ const MainStack = () => {
       <Stack.Screen name="AppStack" component={AppStack} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="ChnagePassword" component={ChnagePassword} />
+      <Stack.Screen name="AboutUs" component={AboutUs} options={{ headerShown: true, headerTitle: 'About Us' }} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="GoogleFit" component={GoogleFit} />
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
       <Stack.Screen name="HomeListScreen" component={HomeListScreen} />
       <Stack.Screen name="MediaPlayerAudio" component={MediaPlayerAudio} />
+      <Stack.Screen name="Downloads" component={Downloads} />
+      <Stack.Screen name="Privacy" component={Privacy} />
+      <Stack.Screen name="Terms" component={Terms} />
       <Stack.Screen name="ExploreTraning" component={ExploreTraning} />
     </Stack.Navigator>
   );
