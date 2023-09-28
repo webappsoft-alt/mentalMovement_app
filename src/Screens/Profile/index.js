@@ -5,14 +5,16 @@ import {
   StyleSheet,
   Text,
   View,
+  Pressable,
+  Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../components/Container';
 import Header from '../../components/Header';
 import AuthHeader from '../../components/AuthHeader';
 import ProfileCard from './ProfileCard';
-import {useNavigation} from '@react-navigation/native';
-import {Users} from '../../assets/images';
+import { useNavigation } from '@react-navigation/native';
+import { Users } from '../../assets/images';
 import {
   About,
   Download,
@@ -21,19 +23,22 @@ import {
   Start,
 } from '../../assets/images/Profile';
 import Button from '../../components/Button';
-import {BaseButton} from '../../components/BaseButton';
+import { BaseButton } from '../../components/BaseButton';
 import style from '../../assets/css/style';
-import {colors, fonts} from '../../constants';
+import { colors, fonts } from '../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LanguageToggle from './LanguageSwitchButton';
-import {useTranslation} from 'react-i18next';
-import {Switch} from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Switch } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ApiRequest from '../../services/ApiService';
+import { ToastMessage } from '../../utils/Toast';
 
 const Profile = () => {
   const navigation = useNavigation();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [isSpanish, setIsSpanish] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const data = [
     // {
@@ -66,15 +71,15 @@ const Profile = () => {
       title: 'Change Password',
       image: <Google />,
     },
-    {
-      id: 6,
-      navigate: 'Notifications',
-      title: 'Notifications',
-      image: <Google />,
-    },
+    // {
+    //   id: 6,
+    //   navigate: 'Notifications',
+    //   title: 'Notifications',
+    //   image: <Google />,
+    // },
     {
       id: 7,
-      navigate: 'Terms & Conditions',
+      navigate: 'Terms',
       title: 'Terms & Conditions',
       image: <Google />,
     },
@@ -98,7 +103,7 @@ const Profile = () => {
     },
     {
       id: 11,
-      navigate: 'About',
+      navigate: 'AboutUs',
       title: 'About US',
       image: <About />,
     },
@@ -110,7 +115,7 @@ const Profile = () => {
   //   // Toggle the language between English and Spanish
   //   setCurrentLanguage(currentLanguage === 'English' ? 'Spanish' : 'English');
   // };
-  const {i18n} = useTranslation();
+  const { i18n } = useTranslation();
 
   // const toggleLanguage = () => {
   //   // Check the current language and toggle to the opposite language
@@ -163,6 +168,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('user_id');
+      await AsyncStorage.removeItem('name');
       navigation.reset({
         index: 0,
         routes: [
@@ -183,18 +189,62 @@ const Profile = () => {
       console.error('Error while logging out:', error);
     }
   };
+  const deleteAccount = async () => {
+    setLoading(true)
+    const userId = await AsyncStorage.getItem('user_id');
+
+    try {
+      const ApiData = {
+        type: 'update_data',
+        table_name: 'users',
+        id: userId,//login user id
+        status: 1
+      }
+      const res = await ApiRequest(ApiData)
+      console.log(res.data)
+      if (!res.data.result) ToastMessage('Internet Error. Try Again later')
+      await AsyncStorage.removeItem('user_id');
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'AuthStack',
+            state: {
+              routes: [
+                {
+                  name: 'Login',
+                },
+              ],
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      // Handle errors if necessary
+      console.error('Error while logging out:', error);
+    } finally {
+      setLoading(false)
+    }
+  };
+
+  const pressDelete = () => {
+    Alert.alert('ALert', 'Are you sure? You want to delete your account.', [
+      { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+      { text: 'Yes', onPress: deleteAccount },
+    ]);
+  }
 
   return (
-    <Container>
+    <Container loading={loading}>
       <ScrollView>
-        <View style={{marginVertical: 40, marginTop: 50}}>
+        <View style={{ marginVertical: 40, marginTop: 50 }}>
           <AuthHeader title={t('Settings')} />
         </View>
         <FlatList
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           data={data}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <ProfileCard
               title={item.title}
               source={item.image}
@@ -230,22 +280,22 @@ const Profile = () => {
               }}>
               <About />
             </View>
-            <Text style={[style.font16Re, {paddingLeft: 16}]}>
+            <Text style={[style.font16Re, { paddingLeft: 16 }]}>
               {t('Language')}
             </Text>
             {/* <Text style={[style.font16Re, {paddingLeft: 16}]}>
                 Language: {currentLanguageName}
               </Text> */}
           </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={[style.font16Re, {paddingLeft: 16}]}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={[style.font16Re, { paddingLeft: 16 }]}>
               {currentLanguageName}
             </Text>
             <Switch
               value={isSpanish}
               onValueChange={toggleLanguage}
               thumbColor={isSpanish ? colors.primary : colors.white}
-              trackColor={{false: colors.white, true: colors.primaryColor}}
+              trackColor={{ false: colors.white, true: colors.primaryColor }}
             />
           </View>
         </View>
@@ -288,13 +338,26 @@ const Profile = () => {
         <BaseButton
           title={t('Logout')}
           onPress={handleLogout}
-          textStyle={{color: colors.black}}
+          textStyle={{ color: colors.black }}
           defaultStyle={{
-            marginVertical: 30,
+            marginTop: 30,
             backgroundColor: '#CFBA00',
             width: '90%',
           }}
         />
+
+        <Pressable onPress={pressDelete}>
+          <Text style={[
+            style.font14Re,
+            {
+              marginTop: 10,
+              marginBottom: 30,
+              color: 'red',
+              fontFamily: fonts.bold,
+              alignSelf: 'center',
+            },
+          ]}>{t('Delete account')}</Text>
+        </Pressable>
         <Text
           style={[
             style.font12Re,

@@ -6,33 +6,30 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import style from '../../assets/css/style';
-import {useNavigation} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
-import {colors, fonts} from '../../constants';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { colors, fonts } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CardHome = ({items, leng}) => {
-  // console.log(items.category, 'itemcat/////');
-  const {t} = useTranslation();
+const CardHome = ({ items, leng, subscription = '', toggleToast = () => "" }) => {
   const navigation = useNavigation();
-
+  console.log(items)
   return (
     <View style={{}}>
       <Text
         style={[
           style.font16Re,
-          {fontFamily: fonts.bold, marginVertical: 10, color: colors.white},
+          { fontFamily: fonts.bold, marginVertical: 10, color: colors.white },
         ]}>
         {leng === 'es' ? items.name_german : items.name}
-        {/* {t('Training Day')} */}
       </Text>
 
       <FlatList
         numColumns={3}
         data={items.category}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return (
             <TouchableOpacity
               onPress={() => {
@@ -56,8 +53,8 @@ const CardHome = ({items, leng}) => {
               <ImageBackground
                 source={require('../../assets/images/HomeCardbg.png')}
                 style={styles.imageBackground}>
-                <Text style={[style.font12Re, {padding: 10}]}>
-                  {leng === 'es' ? items.name_german : items.name}
+                <Text style={[style.font12Re, { padding: 10 }]}>
+                  {leng === 'es' ? item.name_german : item.name}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>

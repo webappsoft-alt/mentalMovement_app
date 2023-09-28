@@ -6,6 +6,7 @@ import {
   Text,
   ActivityIndicator,
   View,
+  Platform,
 } from 'react-native';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
@@ -31,6 +32,8 @@ import {
 } from 'react-native-fbsdk-next';
 import { GoogleLog } from '../../assets/MediaImg';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import appleAuth, { AppleButton } from '@invertase/react-native-apple-authentication';
+
 const Login = () => {
   const navigation = useNavigation();
   const [formData, setFormData] = useState({
@@ -77,6 +80,7 @@ const Login = () => {
 
         // const user_type = res?.data?.user_type;
         await AsyncStorage.setItem('user_id', id);
+        await AsyncStorage.setItem('name', res.data.name);
 
         navigation.reset({
           index: 0,
@@ -135,6 +139,7 @@ const Login = () => {
         if (res.data.result) {
           const id = JSON.stringify(res?.data?.user_id);
           await AsyncStorage.setItem('user_id', id);
+          await AsyncStorage.setItem('name', res.data.name);
           ToastMessage(res?.data?.message);
           navigation.reset({
             index: 0,
@@ -213,6 +218,47 @@ const Login = () => {
       console.log('Login error:', error);
     }
   };
+
+  async function onAppleButtonPress() {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      // Note: it appears putting FULL_NAME first is important, see issue #293
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      // user is authenticated
+      const res = await ApiRequest({
+        type: 'social_login',
+        email: appleAuthRequestResponse.email,
+      });
+      if (res.data.result) {
+        const id = JSON.stringify(res?.data?.user_id);
+        await AsyncStorage.setItem('name', res.data.name);
+        await AsyncStorage.setItem('user_id', id);
+        ToastMessage(res?.data?.message);
+        navigation.reset({
+          index: 0,
+          routes: [{
+            name: 'MainStack',
+            state: {
+              routes: [
+                {
+                  name: "AppStack",
+                }
+              ]
+            }
+          }]
+        })
+      }
+    }
+  }
 
   return (
     <Container customStyle={{ paddingHorizontal: 0 }}>
@@ -365,7 +411,17 @@ const Login = () => {
                   </>
                 )}
               </TouchableOpacity>
-              <TouchableOpacity
+              {Platform.OS == 'ios' && (
+                <AppleButton
+                  buttonStyle={AppleButton.Style.BLACK}
+                  buttonType={AppleButton.Type.SIGN_IN}
+                  style={{
+                    width: '100%', // You must specify a width
+                    height: 45, // You must specify a height
+                  }}
+                  onPress={() => onAppleButtonPress()}
+                />)}
+              {/* <TouchableOpacity
                 onPress={handleCustomLoginFB}
                 style={[styles.box, { marginTop: 0 }]}>
                 <FbLogin />
@@ -380,7 +436,7 @@ const Login = () => {
                   ]}>
                   {t('Continue with Facebook')}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <Footer agreed={false} textStyle={{ color: colors.black }} />
           </View>

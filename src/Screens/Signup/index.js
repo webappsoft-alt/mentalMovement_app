@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -6,17 +6,18 @@ import {
   ActivityIndicator,
   Text,
   View,
+  Platform,
 } from 'react-native';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
-import {colors, fonts} from '../../constants';
-import {useNavigation} from '@react-navigation/native';
+import { colors, fonts } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
 import InputBox from '../../components/InputBox';
 import Footer from '../../components/Footer';
 import style from '../../assets/css/style';
 import Button from '../../components/Button';
-import {Email, FbLogin, Users} from '../../assets/images';
-import {BaseButton} from '../../components/BaseButton';
+import { Email, FbLogin, Users } from '../../assets/images';
+import { BaseButton } from '../../components/BaseButton';
 import {
   validateEmail,
   validateName,
@@ -28,14 +29,15 @@ import {
   LoginManager,
   AccessToken,
 } from 'react-native-fbsdk-next';
-import {ToastMessage} from '../../utils/Toast';
-import {t} from 'i18next';
-import {useTranslation} from 'react-i18next';
+import { ToastMessage } from '../../utils/Toast';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import ApiRequest from '../../services/ApiService';
-import {GoogleLog} from '../../assets/MediaImg';
+import { GoogleLog } from '../../assets/MediaImg';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import appleAuth, { AppleButton } from '@invertase/react-native-apple-authentication';
 const Signup = () => {
   const navigation = useNavigation();
   const [formData, setFormData] = useState({
@@ -90,7 +92,7 @@ const Signup = () => {
 
   const onEyePress = () => setEyePressed(!isEyePressed);
 
-  const {i18n} = useTranslation();
+  const { i18n } = useTranslation();
 
   const toggleLanguage = () => {
     // Check the current language and toggle to the opposite language
@@ -219,13 +221,37 @@ const Signup = () => {
       const UserEmail = userInfo?.user?.email;
       if (UserEmail) {
         await GoogleSignin.signOut();
-        navigation.navigate('PaymentScreen', {
-          type: 'social_register',
-          email: userInfo?.user?.email,
-          first_name: userInfo?.user?.givenName,
-          last_name: userInfo?.user?.familyName,
-          social_token: userInfo?.user.id,
-        });
+        const res = await ApiRequest({
+          type: 'check_email',
+          email: userInfo?.user?.email
+        })
+        console.log("resssss==>>", res.data)
+        if (!res.data.result) {
+          await AsyncStorage.setItem('user_id', String(res.data.user_id));
+          await AsyncStorage.setItem('name', res.data.name);
+
+          navigation.reset({
+            index: 0,
+            routes: [{
+              name: 'MainStack',
+              state: {
+                routes: [
+                  {
+                    name: "AppStack",
+                  }
+                ]
+              }
+            }]
+          })
+        } else {
+          navigation.navigate('PaymentScreen', {
+            type: 'social_register',
+            email: userInfo?.user?.email,
+            first_name: userInfo?.user?.givenName,
+            last_name: userInfo?.user?.familyName,
+            social_token: userInfo?.user.id,
+          });
+        }
         // const res = await ApiRequest({
         //   type: 'social_register',
         //   email: userInfo?.user?.email,
@@ -259,14 +285,64 @@ const Signup = () => {
     }
   };
 
+  async function onAppleButtonPress() {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      // Note: it appears putting FULL_NAME first is important, see issue #293
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      const res = await ApiRequest({
+        type: 'check_email',
+        email: appleAuthRequestResponse.email
+      })
+      console.log("resssss==>>", res.data)
+      if (!res.data.result) {
+        await AsyncStorage.setItem('user_id', String(res.data.user_id));
+        await AsyncStorage.setItem('name', res.data.name);
+
+        navigation.reset({
+          index: 0,
+          routes: [{
+            name: 'MainStack',
+            state: {
+              routes: [
+                {
+                  name: "AppStack",
+                }
+              ]
+            }
+          }]
+        })
+      } else {
+
+        // user is authenticated
+        navigation.navigate('PaymentScreen', {
+          type: 'social_register',
+          email: appleAuthRequestResponse.email,
+          first_name: appleAuthRequestResponse.fullName,
+          last_name: '',
+          social_token: appleAuthRequestResponse.identityToken,
+        });
+      }
+    }
+  }
+
   return (
-    <Container customStyle={{paddingHorizontal: 0}}>
-      <View style={{marginVertical: 20, padding: 10}}>
+    <Container customStyle={{ paddingHorizontal: 0 }}>
+      <View style={{ marginVertical: 20, padding: 10 }}>
         <AuthHeader />
         <Text
           style={[
             style.font28Re,
-            {fontFamily: fonts.timenewregularroman, marginTop: 50},
+            { fontFamily: fonts.timenewregularroman, marginTop: 50 },
           ]}>
           {t("Let's get started")}
         </Text>
@@ -275,8 +351,8 @@ const Signup = () => {
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{flexGrow: 1}}>
-          <View style={{flex: 1}}>
+          contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={{ flex: 1 }}>
             <Text
               style={[
                 style.font20Re,
@@ -295,12 +371,12 @@ const Signup = () => {
               placeholder={'First Name'}
               value={formData.first_name}
               onChangeText={text => {
-                setFormData({...formData, first_name: text});
+                setFormData({ ...formData, first_name: text });
               }}
               Icon={() => <Users />}
             />
             {!formData.first_name && formData.first_name.length > 2 && (
-              <Text style={{top: -12, color: colors.red}}>
+              <Text style={{ top: -12, color: colors.red }}>
                 Enter valid Last Name (John)
               </Text>
             )}
@@ -309,12 +385,12 @@ const Signup = () => {
               placeholder={'Last Name'}
               value={formData.last_name}
               onChangeText={text => {
-                setFormData({...formData, last_name: text});
+                setFormData({ ...formData, last_name: text });
               }}
               Icon={() => <Users />}
             />
             {!formData.last_name && formData.last_name.length > 2 && (
-              <Text style={{top: -12, color: colors.red}}>
+              <Text style={{ top: -12, color: colors.red }}>
                 {' '}
                 Enter valid Last Name (John)
               </Text>
@@ -325,18 +401,18 @@ const Signup = () => {
               KT={'email-address'}
               value={formData.email}
               onChangeText={text => {
-                setFormData({...formData, email: text});
+                setFormData({ ...formData, email: text });
               }}
               Icon={() => <Email />}
             />
             {!isEmailValid && (
-              <Text style={{top: -12, color: colors.red}}>
+              <Text style={{ top: -12, color: colors.red }}>
                 {validationMessage}
               </Text>
             )}
             {/* {isEmailValid ? <Text>{message}</Text> : null} */}
             {!validateEmail(formData.email) && formData.email.length > 2 && (
-              <Text style={{top: -12, color: colors.red}}>
+              <Text style={{ top: -12, color: colors.red }}>
                 {' '}
                 Enter valid email (abc@gmail.com)
               </Text>
@@ -346,14 +422,14 @@ const Signup = () => {
               placeholder={'Password'}
               value={formData.password}
               onChangeText={text => {
-                setFormData({...formData, password: text});
+                setFormData({ ...formData, password: text });
               }}
               isEye={true}
               onEyePress={onEyePress}
               secureTextEntry={isEyePressed ? false : true}
             />
             {formData.password && formData.password.length < 5 && (
-              <Text style={{top: -12, color: colors.red}}>
+              <Text style={{ top: -12, color: colors.red }}>
                 Password must be 6 digits
               </Text>
             )}
@@ -367,18 +443,18 @@ const Signup = () => {
               }
               onPress={handleEmailVerified}
               disabled={disable}
-              defaultStyle={{width: '80%', marginVertical: 24}}
-              // onPress={() =>
-              //   navigation.navigate('MainStack', {screen: 'AppStack'})
-              // }
+              defaultStyle={{ width: '80%', marginVertical: 24 }}
+            // onPress={() =>
+            //   navigation.navigate('MainStack', {screen: 'AppStack'})
+            // }
             />
 
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Login');
               }}
-              style={{alignSelf: 'center', marginBottom: 30}}>
-              <Text style={[style.font14Re, {color: colors.black}]}>
+              style={{ alignSelf: 'center', marginBottom: 30 }}>
+              <Text style={[style.font14Re, { color: colors.black }]}>
                 {t('Already have an account?')}{' '}
                 <Text
                   style={[
@@ -400,17 +476,17 @@ const Signup = () => {
                 justifyContent: 'space-around',
               }}>
               <View
-                style={{height: 1, width: 100, backgroundColor: colors.black}}
+                style={{ height: 1, width: 100, backgroundColor: colors.black }}
               />
               <Text
                 style={[
                   style.font14Re,
-                  {color: colors.black, fontFamily: fonts.bold},
+                  { color: colors.black, fontFamily: fonts.bold },
                 ]}>
                 OR
               </Text>
               <View
-                style={{height: 1, width: 100, backgroundColor: colors.black}}
+                style={{ height: 1, width: 100, backgroundColor: colors.black }}
               />
             </View>
 
@@ -438,7 +514,18 @@ const Signup = () => {
                   </>
                 )}
               </TouchableOpacity>
-              <TouchableOpacity
+
+              {Platform.OS == 'ios' && (
+                <AppleButton
+                  buttonStyle={AppleButton.Style.BLACK}
+                  buttonType={AppleButton.Type.SIGN_IN}
+                  style={{
+                    width: '100%', // You must specify a width
+                    height: 45, // You must specify a height
+                  }}
+                  onPress={() => onAppleButtonPress()}
+                />)}
+              {/* <TouchableOpacity
                 onPress={handleCustomLoginFB}
                 style={[styles.box, {marginTop: 0}]}>
                 <FbLogin />
@@ -453,10 +540,10 @@ const Signup = () => {
                   ]}>
                   {t('Continue with Facebook')}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
-          <Footer agreed={false} textStyle={{color: colors.black}} />
+          <Footer agreed={false} textStyle={{ color: colors.black }} />
         </ScrollView>
       </View>
     </Container>

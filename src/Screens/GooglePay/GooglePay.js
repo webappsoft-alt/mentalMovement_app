@@ -26,10 +26,11 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
   }, []);
   const googlePay = {
     googlePay: {
-      testEnv: true,
-      merchantName: 'My merchant name',
+      testEnv: false,
+      merchantName: 'Mental Movement',
       merchantCountryCode: 'US',
       currencyCode: 'USD',
+      amount: selected == '1' ? 6.99 : 69.99,
       billingAddressConfig: {
         format: PlatformPay.BillingAddressFormat.Full,
         isPhoneNumberRequired: true,
@@ -42,7 +43,7 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
     applePay: {
       cartItems: [
         {
-          label: 'Example item name',
+          label: selected == '1' ? 'Monthly Package' : 'Yearly Package',
           amount: selected == '1' ? '6.99' : '69.99',
           paymentType: PlatformPay.PaymentType.Immediate,
         },
@@ -88,12 +89,15 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
         return;
       }
       let resp = false
+      let id = ''
       if (data.id) {
         resp = true
       } else {
         const registerd = await ApiRequest(data);
         resp = registerd?.data?.result;
         await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
+        await AsyncStorage.setItem('name', registerd?.data.name);
+        id = String(registerd?.data?.user_id)
       }
 
 
@@ -101,7 +105,7 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
         const paymentData = {
           type: 'add_data',
           table_name: 'payment_subscriptions',
-          user_id: data.id ? data.id : registerd?.data?.user_id,
+          user_id: data.id ? data.id : id,
           status: error ? 'failure' : 'success',
           payment_response: error ? JSON.stringify(error) : JSON.stringify(paymentIntent),
           plan_type: selected == '1' ? 'monthly' : "yearly"

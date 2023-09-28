@@ -6,18 +6,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
 import AudioPlayer from './AudioPlayer';
-import {Cross, Infor} from '../../assets/images';
+import { Cross, Infor } from '../../assets/images';
 import style from '../../assets/css/style';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
-import {Volume} from '../../assets/MediaImg';
+import { Volume } from '../../assets/MediaImg';
 import TrackPlayer from 'react-native-track-player';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const MediaPlayerAudio = ({route}) => {
+const MediaPlayerAudio = ({ route }) => {
   const card_Title = route?.params?.card_Title;
   const title = route?.params?.title;
   const voice = route?.params?.voice;
@@ -57,7 +57,7 @@ const MediaPlayerAudio = ({route}) => {
     <ImageBackground
       {...panResponder.panHandlers}
       source={require('../../assets/MediaImg/Bg.png')}
-      style={{flex: 1, alignItems: 'center', padding: 10}}>
+      style={{ flex: 1, alignItems: 'center', padding: 10 }}>
       <FocusAwareStatusBar
         animated={true}
         barStyle={'light-content'}
@@ -89,12 +89,12 @@ const MediaPlayerAudio = ({route}) => {
         </Text>
         <Text style={{textAlign: 'center'}}>{(volume * 100).toFixed(1)}%</Text>
       </View> */}
-      <View style={{position: 'absolute', bottom: 10}}>
+      <View style={{ position: 'absolute', bottom: 10 }}>
         <AudioPlayer
           title={card_Title}
           subTitle={voice}
           audioFile={audioFile}
-          volume={Volume}
+          volume={title}
           setVolume={setVolume}
           isDraggingVolume={isDraggingVolume}
           setIsDraggingVolume={setIsDraggingVolume}

@@ -1,7 +1,8 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import style from '../../assets/css/style';
-import {colors, fonts} from '../../constants';
+import { colors, fonts } from '../../constants';
+import { useTranslation } from 'react-i18next';
 
 const SubcriptionCard = ({
   title,
@@ -10,6 +11,8 @@ const SubcriptionCard = ({
   selected,
   item,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -31,10 +34,10 @@ const SubcriptionCard = ({
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <Text style={[style.font8Re, {color: colors.black}]}>
+        <Text style={[style.font8Re, { color: colors.black }]}>
           {t('save 30% off')}
         </Text>
-        <Text style={[style.font8Re, {color: colors.black}]}>save 30% off</Text>
+        {/* <Text style={[style.font8Re, { color: colors.black }]}>save 30% off</Text> */}
       </View>
       <View
         style={{
@@ -46,19 +49,19 @@ const SubcriptionCard = ({
         <Text
           style={[
             style.font12Re,
-            {color: colors.black, fontFamily: fonts.bold},
+            { color: colors.black, fontFamily: fonts.bold },
           ]}>
           {title}
         </Text>
         <Text
           style={[
             style.font12Re,
-            {color: colors.black, fontFamily: fonts.bold},
+            { color: colors.black, fontFamily: fonts.bold },
           ]}>
           {price} USD
         </Text>
       </View>
-      <Text style={[style.font10Re, {color: colors.black}]}>
+      <Text style={[style.font10Re, { color: colors.black }]}>
         Use Trial for 7 days Free
       </Text>
     </TouchableOpacity>
