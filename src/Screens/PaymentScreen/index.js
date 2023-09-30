@@ -8,7 +8,7 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from '../../assets/css/style';
 import { colors, fonts } from '../../constants';
 import WhiteForword from '../../assets/WhiteForword.png';
@@ -22,6 +22,9 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import GooglePay from '../GooglePay/GooglePay';
 import { LoadingIndicator } from '../../components/LoadingIndicator';
 import { useTranslation } from 'react-i18next';
+import { initConnection, getProducts } from 'react-native-iap';
+import { ITEM_SKUS } from '../../utils/CommonFunc';
+
 const PaymentScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
@@ -29,24 +32,28 @@ const PaymentScreen = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState('');
+  const [produc, setProduc] = useState([]);
 
-  const handleLogin = async () => {
+  const getProduct = async () => {
     try {
-      setIsLoading(true);
-      const res = await ApiRequest({
-        type: 'add_data',
-        table_name: 'payment_subscriptions',
-        user_id: 1,
-        status: 'success or failure',
-        payment_response: 'json format',
-        plan_type: 'monthly',
-      });
-      const resp = res?.data?.result;
+      const connected = await initConnection();
+
+      if (!connected) {
+        return [];
+      }
+
+      const products = await getProducts({ skus: ITEM_SKUS })
+
+      setProduc(products)
+
     } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+      console.log("errrr==>>>>>>", error)
     }
-  };
+  }
+
+  useEffect(() => {
+    getProduct()
+  }, [])
 
   return (
     <>
@@ -93,14 +100,18 @@ const PaymentScreen = () => {
                 )}
               />
             </View>
+            {
+              produc.map((item) => (
+                <SubcriptionCard selected={selected} item={item.productId} onPress={() => setSelected(item.productId)} title={item.productId == 'com.mentalmovement.001c' ? t('Monthly Subscription') : t('Annually Subscription')} price={item.localizedPrice} />
+              ))
+            }
 
-            <SubcriptionCard selected={selected} item={'1'} onPress={() => setSelected('1')} title={t('Monthly Subscription')} price={'6.99'} />
-            <SubcriptionCard
+            {/* <SubcriptionCard
               selected={selected} item={'2'}
               onPress={() => setSelected('2')}
               title={t('Annually Subscription')}
               price={'69.99'}
-            />
+            /> */}
             <View
               style={{
                 alignItems: 'center',

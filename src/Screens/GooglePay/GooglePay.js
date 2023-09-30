@@ -8,6 +8,8 @@ import {
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { requestPurchase, purchaseErrorListener, purchaseUpdatedListener, finishTransaction } from 'react-native-iap';
+import { ToastMessage } from '../../utils/Toast';
 
 const API_URL = 'YOUR_API_URL'; // Replace with your server's API URL
 
@@ -65,6 +67,15 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
 
   const pay = async () => {
     if (!selected) return;
+    if (Platform.OS == 'ios') {
+      try {
+        setIsLoading(true)
+        const res = await requestPurchase({ sku: selected })
+        console.log(res)
+      } catch (error) {
+      }
+      return;
+    }
     setIsLoading(true)
     try {
       const ApiData = {
@@ -95,11 +106,11 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
       } else {
         const registerd = await ApiRequest(data);
         resp = registerd?.data?.result;
-        console.log('respppppppp',registerd.data.name)
-        if(registerd?.data?.user_id)
-        await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
-        if(registerd?.data?.name)
-        await AsyncStorage.setItem('name', registerd?.data.name);
+        console.log('respppppppp', registerd.data.name)
+        if (registerd?.data?.user_id)
+          await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
+        if (registerd?.data?.name)
+          await AsyncStorage.setItem('name', registerd?.data.name);
         id = String(registerd?.data?.user_id)
       }
 
@@ -143,6 +154,81 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
       setIsLoading(false)
     }
   };
+
+  useEffect(() => {
+    const purchaseErrorSubscription = purchaseErrorListener((error) => {
+      setIsLoading(false)
+      ToastMessage(JSON.stringify(error.message))
+      navigation.goBack()
+    });
+
+    const purchaseUpdateSubscription = purchaseUpdatedListener(async (purchase) => {
+      const receipt = purchase.transactionReceipt;
+      if (!receipt) return;
+
+      // TODO: the android receipt validation should be in backend, ref: https://github.com/dooboolab/react-native-iap/blob/0a255579a75e64a938ecf06d6e1be3bcdbb3fdee/docs/docs/usage_instructions/receipt_validation.md
+      // if (Platform.OS === 'ios') {
+      //   const receiptStatus = await this.validateReceipt(receipt);
+
+      //   if (receiptStatus !== 0) {
+      //     return errorCallback(new Error('Purchase Failure'));
+      //   }
+      // }
+      await finishTransaction(purchase, true);
+
+      let resp = false
+      let id = ''
+      if (data.id) {
+        id = String(data.id)
+        resp = true
+      } else {
+        const registerd = await ApiRequest(data);
+        resp = registerd?.data?.result;
+        console.log('respppppppp', registerd.data.name)
+        if (registerd?.data?.user_id)
+          await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
+        if (registerd?.data?.name)
+          await AsyncStorage.setItem('name', registerd?.data.name);
+        id = String(registerd?.data?.user_id)
+      }
+      if (resp) {
+        const paymentData = {
+          type: 'add_data',
+          table_name: 'payment_subscriptions',
+          user_id: id,
+          status: 'success',
+          payment_response: JSON.stringify(purchase),
+          plan_type: selected == 'com.mentalmovement.001c' ? 'monthly' : "yearly"
+        }
+
+        const response = await ApiRequest(paymentData)
+        console.log("paymentData", response.data)
+        setIsLoading(false)
+        navigation.reset({
+          index: 0,
+          routes: [{
+            name: 'MainStack',
+            state: {
+              routes: [
+                {
+                  name: "AppStack",
+                }
+              ]
+            }
+          }]
+        })
+        console.log(response.data)
+        Alert.alert('Success', 'The payment was confirmed successfully.');
+      }
+      setIsLoading(false)
+    });
+
+
+    return () => {
+      purchaseErrorSubscription && purchaseErrorSubscription.remove();
+      purchaseUpdateSubscription && purchaseUpdateSubscription.remove();
+    };
+  }, []);
 
   return (
     <View>
