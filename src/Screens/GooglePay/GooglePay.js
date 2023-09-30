@@ -80,7 +80,7 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
         Platform.OS == 'android' ? googlePay : ApplePay
       );
 
-      console.log("paymentIntent", paymentIntent)
+      console.log("paymentIntent", await paymentIntent)
 
 
       if (error) {
@@ -95,7 +95,10 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
       } else {
         const registerd = await ApiRequest(data);
         resp = registerd?.data?.result;
+        console.log('respppppppp',registerd.data.name)
+        if(registerd?.data?.user_id)
         await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
+        if(registerd?.data?.name)
         await AsyncStorage.setItem('name', registerd?.data.name);
         id = String(registerd?.data?.user_id)
       }

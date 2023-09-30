@@ -22,7 +22,8 @@ const App = () => {
 
   return (
     <StripeProvider
-      publishableKey="pk_live_pWqwswME1ZEqhn34enw1jH5M00iNk9XRQq"
+      // publishableKey="pk_live_pWqwswME1ZEqhn34enw1jH5M00iNk9XRQq"
+      publishableKey='pk_test_jiq9i56R2r9QvRxJuYWRgkeY00RDbpS355'
       merchantIdentifier="merchant.com.mentalmovement.appovement" // required for Apple Pay
     >
       <RootSiblingParent>

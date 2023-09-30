@@ -59,10 +59,12 @@ const AppStack = () => {
   const androidTab = {
     height: 60,
     width: '90%',
+    justifyContent:'center',
+    paddingTop:10,
     borderRadius: 20,
     position: 'absolute',
     left: 20,
-    bottom: 10,
+    bottom: 15,
   };
 
   return (
