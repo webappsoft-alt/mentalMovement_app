@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.319958759561-ob9vvi8ojaipv03ft529b0nre1prkju5</string>
+				<string>com.googleusercontent.apps.319958759561-4na7m40rb4aai3pnlkjf9nhn5hcfeu3j</string>
 			</array>
 		</dict>
 		<dict>
@@ -60,16 +60,16 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Mental Movement needs access to upload files and pictures</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Mental Movement want to access camera to upload picture</string>
 	<key>NSDownloadsUsageDescription</key>
 	<string>Mental Movement needs access to the Downloads folder to save downloaded files.</string>
 	<key>NSFileProtection</key>
 	<string>CompleteUnlessOpen</string>
 	<key>NSFileUsageDescription</key>
-	<string>Mental Movement needs access to the device&apos;s storage to save downloaded files.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Mental Movement want to access camera to upload picture</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Mental Movement needs access to upload files and pictures</string>
+	<string>Mental Movement needs access to the device's storage to save downloaded files.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Mental Movement needs access to upload files and pictures</string>
 	<key>NSPhotoLibraryUsageDescription</key>

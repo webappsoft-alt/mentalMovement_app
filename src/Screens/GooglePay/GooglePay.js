@@ -26,7 +26,7 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
   }, []);
   const googlePay = {
     googlePay: {
-      testEnv: false,
+      testEnv: true,
       merchantName: 'Mental Movement',
       merchantCountryCode: 'US',
       currencyCode: 'USD',
