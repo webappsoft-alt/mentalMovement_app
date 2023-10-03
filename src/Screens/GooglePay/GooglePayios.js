@@ -8,12 +8,11 @@ import {
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { requestPurchase, purchaseErrorListener, purchaseUpdatedListener, finishTransaction } from 'react-native-iap';
 import { ToastMessage } from '../../utils/Toast';
+import { colors } from '../../constants';
+import { requestPurchase, purchaseErrorListener, purchaseUpdatedListener, finishTransaction } from "react-native-iap";
 
-const API_URL = 'YOUR_API_URL'; // Replace with your server's API URL
-
-function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
+function GooglePayios({ data = {}, setIsLoading = () => "", selected = '' }) {
 
   const { isPlatformPaySupported, confirmPlatformPayPayment } = usePlatformPay();
   const navigation = useNavigation()
@@ -238,10 +237,11 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
         style={{
           width: '100%',
           height: 50,
+          backgroundColor: colors.white
         }}
       />
     </View>
   );
 }
 
-export default GooglePay;
+export default GooglePayios;
