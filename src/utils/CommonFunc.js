@@ -1,3 +1,9 @@
+import { Platform } from "react-native";
+
+export const ANNUAL_SUBSCRIPTION = Platform.select({ ios: '', android: 'com.beyouid.001' });
+export const MONTHLY_SUBSCRIPTION = Platform.select({ ios: '', android: 'com.beyouid.002' });
+
+export const ITEM_SKUS = ['com.mentalmovement.001c', 'com.mentalmovement.002c'];
 
 export const formatAMPM = date => {
      var hours = date.getHours();

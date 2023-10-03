@@ -43,6 +43,7 @@
 		976FF0D22ABC295800339962 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 976FF0BF2ABC295700339962 /* SimpleLineIcons.ttf */; };
 		976FF0D32ABC295800339962 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 976FF0C02ABC295700339962 /* FontAwesome6_Brands.ttf */; };
 		976FF0D42ABC295800339962 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 976FF0C12ABC295700339962 /* MaterialIcons.ttf */; };
+		97F290952AC874C8000F561C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F290942AC874C8000F561C /* StoreKit.framework */; };
 		9F8FC138503B404F9D1936C9 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9771048E49CB4D0D92418913 /* Inter-Thin.ttf */; };
 		B6FAC4BA135C4C01B222A509 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90FA9328EB1D49AEB766D36C /* Inter-SemiBold.ttf */; };
 		C237A81C0DE946E9A2315181 /* timesromanbold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75DF092017404259B5E184C8 /* timesromanbold.ttf */; };
@@ -105,6 +106,7 @@
 		976FF0C02ABC295700339962 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		976FF0C12ABC295700339962 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		9771048E49CB4D0D92418913 /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
+		97F290942AC874C8000F561C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BB2BEA9A9AFD4657BC98E021 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
 		BDDB16C5151346A5B6713A92 /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../src/assets/fonts/Inter-Black.ttf"; sourceTree = "<group>"; };
 		D4F59093238E4B72B86D275F /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0913324CD565656CA710BBD /* Pods_MentalM.framework in Frameworks */,
+				97F290952AC874C8000F561C /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +174,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				97F290942AC874C8000F561C /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				8B1DA8CE883C923DE006AD99 /* Pods_MentalM.framework */,
 				6162853EA1258C77783AAA16 /* Pods_MentalM_MentalMTests.framework */,
@@ -667,7 +671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -702,7 +706,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
