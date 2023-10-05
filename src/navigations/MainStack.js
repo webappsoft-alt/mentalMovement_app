@@ -28,8 +28,7 @@ import AboutUs from '../Screens/AboutUs';
 import Downloads from '../Screens/Downloads';
 import Privacy from '../Screens/Privacy';
 import Terms from '../Screens/Terms';
-import PaymentScreen from '../Screens/PaymentScreen/PaymentScreenandroid';
-import PaymentScreenios from '../Screens/PaymentScreen/PaymentScreenios';
+import PaymentScreen from '../Screens/PaymentScreen/PaymentScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,7 +45,7 @@ const MainStack = () => {
       <Stack.Screen name="AboutUs" component={AboutUs} options={{ headerShown: true, headerTitle: 'About Us' }} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="GoogleFit" component={GoogleFit} />
-      <Stack.Screen name="PaymentScreen" component={Platform.OS == 'android' ? PaymentScreen : PaymentScreenios} />
+      <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
       <Stack.Screen name="HomeListScreen" component={HomeListScreen} />
       <Stack.Screen name="MediaPlayerAudio" component={MediaPlayerAudio} />
       <Stack.Screen name="Downloads" component={Downloads} />

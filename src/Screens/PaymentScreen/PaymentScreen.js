@@ -23,9 +23,9 @@ import { LoadingIndicator } from '../../components/LoadingIndicator';
 import { useTranslation } from 'react-i18next';
 import { ITEM_SKUS } from '../../utils/CommonFunc';
 import { initConnection, getProducts } from "react-native-iap";
-import GooglePayios from '../GooglePay/GooglePayios';
+import GooglePay from '../GooglePay/GooglePay';
 
-const PaymentScreenios = () => {
+const PaymentScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -43,6 +43,8 @@ const PaymentScreenios = () => {
       }
 
       const products = await getProducts({ skus: ITEM_SKUS })
+      console.log(products)
+
       setProduc(products)
 
     } catch (error) {
@@ -100,24 +102,9 @@ const PaymentScreenios = () => {
               />
             </View>
             {
-              Platform.OS == 'ios' ?
-                produc.map((item) => (
-                  <SubcriptionCard selected={selected} item={item.productId} onPress={() => setSelected(item.productId)} title={item.productId == 'com.mentalmovement.001c' ? t('Monthly Subscription') : t('Annually Subscription')} price={item.localizedPrice} />
-                )) :
-                <>
-                  <SubcriptionCard
-                    selected={selected} item={'1'}
-                    onPress={() => setSelected('1')}
-                    title={t('Monthly Subscription')}
-                    price={'6.99'}
-                  />
-                  <SubcriptionCard
-                    selected={selected} item={'2'}
-                    onPress={() => setSelected('2')}
-                    title={t('Annually Subscription')}
-                    price={'69.99'}
-                  />
-                </>
+              produc.map((item) => (
+                <SubcriptionCard selected={selected} item={item.productId} onPress={() => setSelected(item.productId)} title={(item.productId == 'com.mentalmovement.001' || item.productId == 'com.mentalmovement.001c') ? t('Monthly Subscription') : t('Annually Subscription')} price={item.localizedPrice} />
+              ))
             }
 
             <View
@@ -128,11 +115,11 @@ const PaymentScreenios = () => {
                 marginVertical: 10,
               }}>
               <Text style={[style.font12Re]}>{t('SUBSCRIBE TODAY')}</Text>
-              <Text style={[style.font12Re, { textAlign: 'center' }]}>
+              {/* <Text style={[style.font12Re, { textAlign: 'center' }]}>
                 {t(
                   'Payment will be charged to your App Store/Play Store account at the confirmation of purchase',
                 )}
-              </Text>
+              </Text> */}
               <Text
                 style={[
                   style.font12Re,
@@ -171,7 +158,7 @@ const PaymentScreenios = () => {
           </View>
         </ScrollView>
 
-        <GooglePayios
+        <GooglePay
           selected={selected}
           data={route.params}
           setIsLoading={setIsLoading}
@@ -181,6 +168,6 @@ const PaymentScreenios = () => {
   );
 };
 
-export default PaymentScreenios;
+export default PaymentScreen;
 
 const styles = StyleSheet.create({});
