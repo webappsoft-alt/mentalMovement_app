@@ -24,11 +24,13 @@ import Explore from '../Screens/Explore';
 import ExploreTraning from '../Screens/ExploreTraning/ExploreTraning';
 import Coaching from '../Screens/Coaching';
 import { useTranslation } from 'react-i18next';
-import PaymentScreen from '../Screens/PaymentScreen';
 import AboutUs from '../Screens/AboutUs';
 import Downloads from '../Screens/Downloads';
 import Privacy from '../Screens/Privacy';
 import Terms from '../Screens/Terms';
+import PaymentScreen from '../Screens/PaymentScreen/PaymentScreenandroid';
+import PaymentScreenios from '../Screens/PaymentScreen/PaymentScreenios';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const MainStack = () => {
@@ -44,7 +46,7 @@ const MainStack = () => {
       <Stack.Screen name="AboutUs" component={AboutUs} options={{ headerShown: true, headerTitle: 'About Us' }} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="GoogleFit" component={GoogleFit} />
-      <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
+      <Stack.Screen name="PaymentScreen" component={Platform.OS == 'android' ? PaymentScreen : PaymentScreenios} />
       <Stack.Screen name="HomeListScreen" component={HomeListScreen} />
       <Stack.Screen name="MediaPlayerAudio" component={MediaPlayerAudio} />
       <Stack.Screen name="Downloads" component={Downloads} />
@@ -59,8 +61,8 @@ const AppStack = () => {
   const androidTab = {
     height: 60,
     width: '90%',
-    justifyContent:'center',
-    paddingTop:10,
+    justifyContent: 'center',
+    paddingTop: 10,
     borderRadius: 20,
     position: 'absolute',
     left: 20,
@@ -71,7 +73,7 @@ const AppStack = () => {
     <ImageBackground
       source={require('../assets/images/png/start_img.png')}
       style={{ flex: 1 }}
-      >
+    >
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
