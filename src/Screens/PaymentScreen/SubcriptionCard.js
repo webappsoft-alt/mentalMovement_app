@@ -58,11 +58,11 @@ const SubcriptionCard = ({
             style.font12Re,
             { color: colors.black, fontFamily: fonts.bold },
           ]}>
-          {price} USD
+          {price}
         </Text>
       </View>
       <Text style={[style.font10Re, { color: colors.black }]}>
-        Use Trial for 7 days Free
+        {t('trial')}
       </Text>
     </TouchableOpacity>
   );

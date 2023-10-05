@@ -15,8 +15,7 @@ import ResetPassword from '../Screens/ChangePassword/ResetPassword';
 import Privacy from '../Screens/Privacy';
 import Terms from '../Screens/Terms';
 import { Platform } from 'react-native';
-import PaymentScreen from '../Screens/PaymentScreen/PaymentScreenandroid';
-import PaymentScreenios from '../Screens/PaymentScreen/PaymentScreenios';
+import PaymentScreen from '../Screens/PaymentScreen/PaymentScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +36,7 @@ const AuthStack = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="VerifyEmail" component={VerifyEamil} />
-        <Stack.Screen name="PaymentScreen" component={Platform.OS == 'android' ? PaymentScreen : PaymentScreenios} />
+        <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
         <Stack.Screen name="VerifyCode" component={VerifyCode} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="Privacy" component={Privacy} />
