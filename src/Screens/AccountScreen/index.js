@@ -6,36 +6,29 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../components/Container';
 import Footer from '../../components/Footer';
 
-import {useNavigation} from '@react-navigation/native';
-import {colors, fonts} from '../../constants';
+import { useNavigation } from '@react-navigation/native';
+import { colors, fonts } from '../../constants';
 import style from '../../assets/css/style';
-import {AppLogo, FbLogin} from '../../assets/images';
-import {Google} from '../../assets/images/Profile';
-import {GoogleLog} from '../../assets/MediaImg';
+import { AppLogo, FbLogin } from '../../assets/images';
+import { Google } from '../../assets/images/Profile';
+import { GoogleLog } from '../../assets/MediaImg';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {
-  LoginButton,
-  Profile,
-  LoginManager,
-  AccessToken,
-} from 'react-native-fbsdk-next';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ApiRequest from '../../services/ApiService';
-import {ToastMessage} from '../../utils/Toast';
+import { ToastMessage } from '../../utils/Toast';
 const Account = () => {
   const navigation = useNavigation();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState('');
 
   GoogleSignin.configure({
@@ -69,33 +62,33 @@ const Account = () => {
         console.error(error);
       });
 
-  const handleCustomLoginFB = async () => {
-    try {
-      const result = await LoginManager.logInWithPermissions([
-        'public_profile',
-        'email',
-      ]);
+  // const handleCustomLoginFB = async () => {
+  //   try {
+  //     const result = await LoginManager.logInWithPermissions([
+  //       'public_profile',
+  //       'email',
+  //     ]);
 
-      if (result.isCancelled) {
-        console.log('Login was cancelled');
-      } else {
-        const accessToken = await AccessToken.getCurrentAccessToken();
+  //     if (result.isCancelled) {
+  //       console.log('Login was cancelled');
+  //     } else {
+  //       const accessToken = await AccessToken.getCurrentAccessToken();
 
-        if (accessToken) {
-          console.log('Logged in successfully');
-          console.log('Access Token:', accessToken.accessToken.toString());
+  //       if (accessToken) {
+  //         console.log('Logged in successfully');
+  //         console.log('Access Token:', accessToken.accessToken.toString());
 
-          const currentProfile = await Profile.getCurrentProfile();
-          if (currentProfile) {
-            console.log('Logged user:', currentProfile.name);
-            console.log('Profile ID:', currentProfile.userID);
-          }
-        }
-      }
-    } catch (error) {
-      console.log('Login error:', error);
-    }
-  };
+  //         const currentProfile = await Profile.getCurrentProfile();
+  //         if (currentProfile) {
+  //           console.log('Logged user:', currentProfile.name);
+  //           console.log('Profile ID:', currentProfile.userID);
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log('Login error:', error);
+  //   }
+  // };
   const handleGoogle = async () => {
     try {
       setIsLoading('google');
@@ -141,20 +134,20 @@ const Account = () => {
 
   return (
     <Container>
-      <View style={{flex: 1}}>
-        <View style={{alignSelf: 'center', marginVertical: 40}}>
+      <View style={{ flex: 1 }}>
+        <View style={{ alignSelf: 'center', marginVertical: 40 }}>
           <AppLogo />
         </View>
 
-        <Text style={[style.font34Re, {fontFamily: fonts.timenewregularroman}]}>
+        <Text style={[style.font34Re, { fontFamily: fonts.timenewregularroman }]}>
           {t('Start Your Journey')}
         </Text>
-        <Text style={[style.font14Re, {width: '80%'}]}>
+        <Text style={[style.font14Re, { width: '80%' }]}>
           {t(
             'A performance mindset app for athletes to boost your success in a healthy way',
           )}
         </Text>
-        <View style={{height: 200}}>
+        <View style={{ height: 200 }}>
           <TouchableOpacity
             disabled={isLoading == 'google'}
             style={styles.box}
@@ -180,7 +173,7 @@ const Account = () => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleCustomLoginFB}
-            style={[styles.box, {marginTop: 0}]}>
+            style={[styles.box, { marginTop: 0 }]}>
             <FbLogin />
             <Text
               style={[
@@ -223,13 +216,13 @@ const Account = () => {
             onPress={() => {
               navigation.navigate('Signup');
             }}
-            style={{alignSelf: 'center'}}>
+            style={{ alignSelf: 'center' }}>
             <Text style={[style.font14Re]}>
               {t("Don't have an account?")}{' '}
               <Text
                 style={[
                   style.font14Re,
-                  {fontFamily: fonts.medium, textDecorationLine: 'underline'},
+                  { fontFamily: fonts.medium, textDecorationLine: 'underline' },
                 ]}>
                 {t('Sign up')}
               </Text>
@@ -237,7 +230,7 @@ const Account = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{height: 100}}>
+      <View style={{ height: 100 }}>
         <Footer agreed={true} />
       </View>
     </Container>

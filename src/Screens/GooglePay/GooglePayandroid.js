@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, Alert, Platform, Text, Image, Pressable, TouchableOpacity } from 'react-native';
-import {
-  PlatformPayButton,
-  usePlatformPay,
-  PlatformPay,
-} from '@stripe/stripe-react-native';
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -15,17 +10,17 @@ import style from '../../assets/css/style';
 
 function GooglePayandroid({ data = {}, setIsLoading = () => "", selected = '' }) {
 
-  const { isPlatformPaySupported, confirmPlatformPayPayment } = usePlatformPay();
-  const navigation = useNavigation();
+  // const { isPlatformPaySupported, confirmPlatformPayPayment } = usePlatformPay();
+  // const navigation = useNavigation();
 
-  React.useEffect(() => {
-    (async function () {
-      if (!(await isPlatformPaySupported({ googlePay: { testEnv: true } }))) {
-        Alert.alert('Google Pay is not supported.');
-        return;
-      }
-    })();
-  }, []);
+  // React.useEffect(() => {
+  //   (async function () {
+  //     if (!(await isPlatformPaySupported({ googlePay: { testEnv: true } }))) {
+  //       Alert.alert('Google Pay is not supported.');
+  //       return;
+  //     }
+  //   })();
+  // }, []);
   const googlePay = {
     googlePay: {
       testEnv: true,
@@ -66,84 +61,84 @@ function GooglePayandroid({ data = {}, setIsLoading = () => "", selected = '' })
 
 
   const pay = async () => {
-    if (!selected) return ToastMessage('Please select a subscription plan');
-    setIsLoading(true)
-    try {
-      const ApiData = {
-        type: 'payment_intent',
-        amount: selected == '1' ? '6.99' : '69.99'
-      }
-      const res = await ApiRequest(ApiData)
-      const clientSecret = res.data.intent
-      console.log("clientSecret==>>", clientSecret)
+    // if (!selected) return ToastMessage('Please select a subscription plan');
+    // setIsLoading(true)
+    // try {
+    //   const ApiData = {
+    //     type: 'payment_intent',
+    //     amount: selected == '1' ? '6.99' : '69.99'
+    //   }
+    //   const res = await ApiRequest(ApiData)
+    //   const clientSecret = res.data.intent
+    //   console.log("clientSecret==>>", clientSecret)
 
-      const { error, paymentIntent } = await confirmPlatformPayPayment(
-        clientSecret,
-        Platform.OS == 'android' ? googlePay : ApplePay
-      );
+    //   const { error, paymentIntent } = await confirmPlatformPayPayment(
+    //     clientSecret,
+    //     Platform.OS == 'android' ? googlePay : ApplePay
+    //   );
 
-      console.log("paymentIntent", await paymentIntent)
-
-
-      if (error) {
-        Alert.alert(error.code, error.message);
-        // Update UI to prompt user to retry payment (and possibly another payment method)
-        return;
-      }
-      let resp = false
-      let id = ''
-      if (data.id) {
-        resp = true
-      } else {
-        const registerd = await ApiRequest(data);
-        resp = registerd?.data?.result;
-        console.log('respppppppp', registerd.data.name)
-        if (registerd?.data?.user_id)
-          await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
-        if (registerd?.data?.name)
-          await AsyncStorage.setItem('name', registerd?.data.name);
-        id = String(registerd?.data?.user_id)
-      }
+    //   console.log("paymentIntent", await paymentIntent)
 
 
-      if (resp) {
-        const paymentData = {
-          type: 'add_data',
-          table_name: 'payment_subscriptions',
-          user_id: data.id ? data.id : id,
-          status: error ? 'failure' : 'success',
-          payment_response: error ? JSON.stringify(error) : JSON.stringify(paymentIntent),
-          plan_type: selected == '1' ? 'monthly' : "yearly"
-        }
+    //   if (error) {
+    //     Alert.alert(error.code, error.message);
+    //     // Update UI to prompt user to retry payment (and possibly another payment method)
+    //     return;
+    //   }
+    //   let resp = false
+    //   let id = ''
+    //   if (data.id) {
+    //     resp = true
+    //   } else {
+    //     const registerd = await ApiRequest(data);
+    //     resp = registerd?.data?.result;
+    //     console.log('respppppppp', registerd.data.name)
+    //     if (registerd?.data?.user_id)
+    //       await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
+    //     if (registerd?.data?.name)
+    //       await AsyncStorage.setItem('name', registerd?.data.name);
+    //     id = String(registerd?.data?.user_id)
+    //   }
+
+
+    //   if (resp) {
+    //     const paymentData = {
+    //       type: 'add_data',
+    //       table_name: 'payment_subscriptions',
+    //       user_id: data.id ? data.id : id,
+    //       status: error ? 'failure' : 'success',
+    //       payment_response: error ? JSON.stringify(error) : JSON.stringify(paymentIntent),
+    //       plan_type: selected == '1' ? 'monthly' : "yearly"
+    //     }
 
 
 
-        const response = await ApiRequest(paymentData)
-        console.log("paymentData", response.data)
-        navigation.reset({
-          index: 0,
-          routes: [{
-            name: 'MainStack',
-            state: {
-              routes: [
-                {
-                  name: "AppStack",
-                }
-              ]
-            }
-          }]
-        })
-        console.log(response.data)
-        Alert.alert('Success', 'The payment was confirmed successfully.');
-      }
+    //     const response = await ApiRequest(paymentData)
+    //     console.log("paymentData", response.data)
+    //     navigation.reset({
+    //       index: 0,
+    //       routes: [{
+    //         name: 'MainStack',
+    //         state: {
+    //           routes: [
+    //             {
+    //               name: "AppStack",
+    //             }
+    //           ]
+    //         }
+    //       }]
+    //     })
+    //     console.log(response.data)
+    //     Alert.alert('Success', 'The payment was confirmed successfully.');
+    //   }
 
 
-    } catch (error) {
-      console.log("Errrr==>>", error)
+    // } catch (error) {
+    //   console.log("Errrr==>>", error)
 
-    } finally {
-      setIsLoading(false)
-    }
+    // } finally {
+    //   setIsLoading(false)
+    // }
   };
 
   return (

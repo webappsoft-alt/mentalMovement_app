@@ -47,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "319958759561-ob9vvi8ojaipv03ft529b0nre1prkju5.apps.googleusercontent.com",
+              "client_id": "319958759561-4na7m40rb4aai3pnlkjf9nhn5hcfeu3j.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.MentalMovement.app"
+                "bundle_id": "com.mentalmovement.app"
               }
             }
           ]

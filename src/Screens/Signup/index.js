@@ -23,12 +23,12 @@ import {
   validateName,
   validatePassword,
 } from '../../utils/Validations';
-import {
-  LoginButton,
-  Profile,
-  LoginManager,
-  AccessToken,
-} from 'react-native-fbsdk-next';
+// import {
+//   LoginButton,
+//   Profile,
+//   LoginManager,
+//   AccessToken,
+// } from 'react-native-fbsdk-next';
 import { ToastMessage } from '../../utils/Toast';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -167,54 +167,58 @@ const Signup = () => {
     }
   }, [formData.email]);
 
-  const handleCustomLoginFB = async () => {
-    try {
-      const result = await LoginManager.logInWithPermissions([
-        'public_profile',
-        'email',
-      ]);
+  // const handleCustomLoginFB = async () => {
+  //   try {
+  //     const result = await LoginManager.logInWithPermissions([
+  //       'public_profile',
+  //       'email',
+  //     ]);
 
-      if (result.isCancelled) {
-        console.log('Login was cancelled');
-      } else {
-        const accessToken = await AccessToken.getCurrentAccessToken();
+  //     if (result.isCancelled) {
+  //       console.log('Login was cancelled');
+  //     } else {
+  //       const accessToken = await AccessToken.getCurrentAccessToken();
 
-        if (accessToken) {
-          console.log('Logged in successfully');
-          console.log('Access Token:', accessToken.accessToken.toString());
+  //       if (accessToken) {
+  //         console.log('Logged in successfully');
+  //         console.log('Access Token:', accessToken.accessToken.toString());
 
-          const currentProfile = await Profile.getCurrentProfile();
+  //         const currentProfile = await Profile.getCurrentProfile();
 
-          console.log('Logged user:', currentProfile.name);
-          console.log('Profile ID:', currentProfile.userID);
+  //         console.log('Logged user:', currentProfile.name);
+  //         console.log('Profile ID:', currentProfile.userID);
 
-          if (currentProfile.email) {
-            const res = await ApiRequest({
-              type: 'social_register',
-              email: currentProfile?.email,
-            });
-            console.log(res.data, 'ff');
-            if (res.data.result) {
-              const id = JSON.stringify(res?.data?.user_id);
-              await AsyncStorage.setItem('user_id', id);
-              ToastMessage(res?.data?.message);
-              navigation.navigate('MainStack');
-            }
-          } else {
-            ToastMessage('No user exsit');
-            console.log('no user data ');
-          }
-        }
-      }
-    } catch (error) {
-      console.log('Login error:', error);
-    }
-  };
+  //         if (currentProfile.email) {
+  //           const res = await ApiRequest({
+  //             type: 'social_register',
+  //             email: currentProfile?.email,
+  //           });
+  //           console.log(res.data, 'ff');
+  //           if (res.data.result) {
+  //             const id = JSON.stringify(res?.data?.user_id);
+  //             await AsyncStorage.setItem('user_id', id);
+  //             ToastMessage(res?.data?.message);
+  //             navigation.navigate('MainStack');
+  //           }
+  //         } else {
+  //           ToastMessage('No user exsit');
+  //           console.log('no user data ');
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log('Login error:', error);
+  //   }
+  // };
   const handleGoogle = async () => {
     try {
       setIsLoading1('google');
       // Check for Google Play Services
-      await GoogleSignin.hasPlayServices();
+      GoogleSignin.configure({
+        webClientId: '319958759561-ks499rmr0a8103urgc8v0lgargbk1ab1.apps.googleusercontent.com',
+        offlineAccess: true,
+      });
+      await GoogleSignin.hasPlayServices({ autoResolve: true, showPlayServicesUpdateDialog: true });
 
       const userInfo = await GoogleSignin.signIn();
 
@@ -229,6 +233,7 @@ const Signup = () => {
         if (!res.data.result) {
           await AsyncStorage.setItem('user_id', String(res.data.user_id));
           await AsyncStorage.setItem('name', res.data.name);
+          await GoogleSignin.signOut()
 
           navigation.reset({
             index: 0,
@@ -270,16 +275,7 @@ const Signup = () => {
         console.log('no user data ');
       }
     } catch (error) {
-      // Handle errors
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('User cancelled the login flow');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Operation is in progress already');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Play services not available or outdated');
-      } else {
-        console.log('Some other error happened:', error.message);
-      }
+      console.log(error)
     } finally {
       setIsLoading1('');
     }

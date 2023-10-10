@@ -22,7 +22,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { LoadingIndicator } from '../../components/LoadingIndicator';
 import { useTranslation } from 'react-i18next';
 import { ITEM_SKUS } from '../../utils/CommonFunc';
-import { initConnection, getProducts } from "react-native-iap";
+import { initConnection, getProducts, flushFailedPurchasesCachedAsPendingAndroid } from "react-native-iap";
 import GooglePay from '../GooglePay/GooglePay';
 
 const PaymentScreen = () => {
@@ -44,9 +44,10 @@ const PaymentScreen = () => {
 
       const products = await getProducts({ skus: ITEM_SKUS })
       console.log(products)
-
-      setProduc(products)
-
+      setProduc(products);
+      if (Platform.OS === 'android') {
+        flushFailedPurchasesCachedAsPendingAndroid();
+      }
     } catch (error) {
       console.log("errrr==>>>>>>", error)
     }
@@ -145,21 +146,11 @@ const PaymentScreen = () => {
                 </TouchableOpacity>
               </View>
             </View>
-            {/* <BaseButton
-        title={'Google Pay'}
-        onPress={() => navigation.navigate('Account')}
-        textStyle={{ color: colors.black }}
-        defaultStyle={{
-          marginVertical: 30,
-          backgroundColor: '#CFBA00',
-          width: '90%',
-        }}
-      /> */}
           </View>
         </ScrollView>
 
         <GooglePay
-          selected={selected}
+          sku={selected}
           data={route.params}
           setIsLoading={setIsLoading}
         />
