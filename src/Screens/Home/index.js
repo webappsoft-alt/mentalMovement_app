@@ -101,7 +101,7 @@ const Home = () => {
       const res = await ApiRequest(ApiData);
       setSubscription(res.data.subscription_remaining_day);
       if (res.data.subscription_remaining_day == 0) {
-        toggleToast();
+        // toggleToast(); 
       }
     } catch (error) { }
   };
@@ -198,12 +198,11 @@ const Home = () => {
                 style.font14,
                 { textAlign: 'center', color: colors.black, paddingVertical: 10 },
               ]}>
-              Your Subscription has been expired. Please purchase a new
-              subscription plan.
+              {t("subscripiton")}
             </Text>
             <BaseButton
               defaultStyle={{ width: '80%' }}
-              title={'Upgrade'}
+              title={'Subscribe Now'}
               onPress={async () => {
                 toggleModal();
                 const id = await AsyncStorage.getItem('user_id');

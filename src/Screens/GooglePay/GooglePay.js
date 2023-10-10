@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, Alert, Platform, Image, TouchableOpacity, Text } from 'react-native';
-import {
-  PlatformPayButton,
-  usePlatformPay,
-  PlatformPay,
-} from '@stripe/stripe-react-native';
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -15,58 +10,11 @@ import style from '../../assets/css/style';
 
 function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
 
-  const { isPlatformPaySupported, confirmPlatformPayPayment } = usePlatformPay();
   const navigation = useNavigation()
-
-  React.useEffect(() => {
-    (async function () {
-      if (!(await isPlatformPaySupported({ googlePay: { testEnv: true } }))) {
-        Alert.alert('Google Pay is not supported.');
-        return;
-      }
-    })();
-  }, []);
-  const googlePay = {
-    googlePay: {
-      testEnv: false,
-      merchantName: 'Mental Movement',
-      merchantCountryCode: 'US',
-      currencyCode: 'USD',
-      amount: selected == '1' ? 6.99 : 69.99,
-      billingAddressConfig: {
-        format: PlatformPay.BillingAddressFormat.Full,
-        isPhoneNumberRequired: true,
-        isRequired: true,
-      },
-    },
-  }
-
-  const ApplePay = {
-    applePay: {
-      cartItems: [
-        {
-          label: selected == '1' ? 'Monthly Package' : 'Yearly Package',
-          amount: selected == '1' ? '6.99' : '69.99',
-          paymentType: PlatformPay.PaymentType.Immediate,
-        },
-        {
-          label: 'Total',
-          amount: selected == '1' ? '6.99' : '69.99',
-          paymentType: PlatformPay.PaymentType.Immediate,
-        },
-      ],
-      merchantCountryCode: 'US',
-      currencyCode: 'USD',
-      requiredShippingAddressFields: [
-        PlatformPay.ContactField.PostalAddress,
-      ],
-      requiredBillingContactFields: [PlatformPay.ContactField.PhoneNumber],
-    },
-  }
 
 
   const pay = async () => {
-    if (!selected) return ToastMessage('Please choose a subscription before checkout.');
+    if (!selected) return ToastMessage('Please choose a subscription plan before checkout.');
     try {
       setIsLoading(true)
       const res = await requestPurchase({ sku: selected })
