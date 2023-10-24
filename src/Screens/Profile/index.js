@@ -109,43 +109,12 @@ const Profile = () => {
     },
   ];
 
-  const [currentLanguage, setCurrentLanguage] = useState('English'); // Default language is English
 
-  // const toggleLanguage = () => {
-  //   // Toggle the language between English and Spanish
-  //   setCurrentLanguage(currentLanguage === 'English' ? 'Spanish' : 'English');
-  // };
   const { i18n } = useTranslation();
 
-  // const toggleLanguage = () => {
-  //   // Check the current language and toggle to the opposite language
-  //   if (i18n.language === 'en') {
-  //     i18n.changeLanguage('es'); // Switch to Spanish
-  //   } else {
-  //     i18n.changeLanguage('en'); // Switch to English
-  //   }
-  // };
-  const getSelectedLanguage = async () => {
-    try {
-      const language = await AsyncStorage.getItem('selectedLanguage');
-      return language || 'en'; // Default to English if no language is stored
-    } catch (error) {
-      console.error('Error getting selected language:', error);
-      return 'en'; // Default to English in case of an error
-    }
-  };
-
-  useEffect(() => {
-    getSelectedLanguage().then(language => {
-      // Set the initial language when the component mounts
-      i18n.changeLanguage(language);
-      setCurrentLanguageName(language === 'en' ? 'English' : 'Spanish');
-      setIsSpanish(language === 'es');
-    });
-  }, []);
-
   const [currentLanguageName, setCurrentLanguageName] = useState('English');
-  const toggleLanguage = () => {
+
+  const toggleLanguage = async () => {
     let newLanguage;
     if (i18n.language === 'en') {
       newLanguage = 'es'; // Switch to Spanish
@@ -154,7 +123,7 @@ const Profile = () => {
     }
 
     // Save the selected language in AsyncStorage
-    AsyncStorage.setItem('selectedLanguage', newLanguage)
+    await AsyncStorage.setItem('selectedLanguage', newLanguage)
       .then(() => {
         i18n.changeLanguage(newLanguage);
         setCurrentLanguageName(newLanguage === 'en' ? 'English' : 'Spanish');
@@ -164,6 +133,11 @@ const Profile = () => {
         console.error('Error saving selected language:', error);
       });
   };
+
+  useEffect(() => {
+    setCurrentLanguageName(i18n.language == 'en' ? 'English' : 'Spanish')
+    setIsSpanish(i18n.language === 'es');
+  }, [i18n.language])
 
   const handleLogout = async () => {
     try {
@@ -283,9 +257,7 @@ const Profile = () => {
             <Text style={[style.font16Re, { paddingLeft: 16 }]}>
               {t('Language')}
             </Text>
-            {/* <Text style={[style.font16Re, {paddingLeft: 16}]}>
-                Language: {currentLanguageName}
-              </Text> */}
+
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[style.font16Re, { paddingLeft: 16 }]}>
@@ -299,42 +271,6 @@ const Profile = () => {
             />
           </View>
         </View>
-        {/* </TouchableOpacity> */}
-
-        {/* //// */}
-        {/* <TouchableOpacity onPress={toggleLanguage}>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginVertical: 6,
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              borderBottomWidth: 0.2,
-              paddingBottom: 20,
-              borderBottomColor: colors.white,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  backgroundColor: colors.line,
-                  borderRadius: 50,
-                }}>
-                <About />
-              </View>
-              <Text style={[style.font16Re, {paddingLeft: 16}]}>Language</Text>
-            </View>
-            <Icon name={'chevron-forward'} size={22} color={colors.white} />
-          </View>
-        </TouchableOpacity> */}
-        {/* <Text style={[style.font14]}>{t('greeting')}</Text> */}
-        {/* <Text style={[style.font14]}>{t('Downloads')}</Text> */}
-        {/* <Text style={style.font16Re}> Current Language: {currentLanguage}</Text> */}
-        {/* <LanguageToggle /> */}
-        {/* //// */}
         <BaseButton
           title={t('Logout')}
           onPress={handleLogout}

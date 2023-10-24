@@ -4,9 +4,17 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native-svg';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
+import { useTranslation } from 'react-i18next';
 
 const Splash = () => {
   const navigation = useNavigation();
+  const { i18n } = useTranslation();
+
+  const setLang = async () => {
+    await AsyncStorage.setItem("selectedLanguage", "es");
+    i18n.changeLanguage('es'); // Switch to English
+  }
+
   const getUserId = async () => {
     const user_id = await AsyncStorage.getItem('user_id');
     console.log('id...', user_id);
@@ -27,6 +35,7 @@ const Splash = () => {
           }]
         })
       } else {
+        setLang()
         navigation.reset({
           index: 0,
           routes: [{
