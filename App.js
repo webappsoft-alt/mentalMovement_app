@@ -14,7 +14,7 @@ const App = () => {
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
     setTimeout(() => {
-      RNBootSplash.hide();
+      RNBootSplash.hide({ fade: true, });
     }, 3000);
   }, []);
 

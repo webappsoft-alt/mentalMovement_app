@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button} from 'react-native';
-import {useTranslation} from 'react-i18next';
+import { Button } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const LanguageToggle = () => {
-  const {i18n} = useTranslation();
+  const { i18n } = useTranslation();
 
   const toggleLanguage = () => {
     // Check the current language and toggle to the opposite language

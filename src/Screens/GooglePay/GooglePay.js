@@ -8,11 +8,12 @@ import { colors, fonts } from '../../constants';
 import { requestPurchase, purchaseErrorListener, purchaseUpdatedListener, finishTransaction } from "react-native-iap";
 import style from '../../assets/css/style';
 
-function GooglePay({ data = {}, setIsLoading = () => "", sku = '' }) {
+function GooglePay({ setIsLoading = () => "", sku = '' }) {
 
   const navigation = useNavigation()
 
   const pay = async () => {
+    console.log("rrrrr==>>", sku)
     if (!sku) return ToastMessage('Please choose a subscription plan before checkout.');
     setIsLoading(true)
     const params = Platform.select({
@@ -31,7 +32,7 @@ function GooglePay({ data = {}, setIsLoading = () => "", sku = '' }) {
   };
 
   useEffect(() => {
-    const purchaseErrorSubscription = purchaseErrorListener((error) => {
+    const purchaseErrorSubscription = purchaseErrorListener(async (error) => {
       setIsLoading(false)
       ToastMessage(JSON.stringify(error.message))
       navigation.goBack()
@@ -41,64 +42,35 @@ function GooglePay({ data = {}, setIsLoading = () => "", sku = '' }) {
       const receipt = purchase.transactionReceipt;
 
       if (receipt) {
-
-
-        // TODO: the android receipt validation should be in backend, ref: https://github.com/dooboolab/react-native-iap/blob/0a255579a75e64a938ecf06d6e1be3bcdbb3fdee/docs/docs/usage_instructions/receipt_validation.md
-        // if (Platform.OS === 'ios') {
-        //   const receiptStatus = await this.validateReceipt(receipt);
-
-        //   if (receiptStatus !== 0) {
-        //     return errorCallback(new Error('Purchase Failure'));
-        //   }
-        // }
         await finishTransaction({ purchase, isConsumable: true });
-
-        let resp = false
-        let id = ''
-        if (data.id) {
-          id = String(data.id)
-          resp = true
-        } else {
-          const registerd = await ApiRequest(data);
-          resp = registerd?.data?.result;
-          console.log('respppppppp', registerd.data.name)
-          if (registerd?.data?.user_id)
-            await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
-          if (registerd?.data?.name)
-            await AsyncStorage.setItem('name', registerd?.data.name);
-          id = String(registerd?.data?.user_id)
+        const user_id = await AsyncStorage.getItem('user_id');
+        const paymentData = {
+          type: 'add_data',
+          table_name: 'payment_subscriptions',
+          user_id: user_id,
+          status: 'success',
+          payment_response: JSON.stringify(purchase),
+          plan_type: sku == 'com.mentalmovement.001c' ? 'monthly' : "yearly"
         }
-        if (resp) {
-          const paymentData = {
-            type: 'add_data',
-            table_name: 'payment_subscriptions',
-            user_id: id,
-            status: 'success',
-            payment_response: JSON.stringify(purchase),
-            plan_type: sku == 'com.mentalmovement.001c' ? 'monthly' : "yearly"
-          }
 
-          const response = await ApiRequest(paymentData)
-          console.log("paymentData", response.data)
-          setIsLoading(false)
-          navigation.reset({
-            index: 0,
-            routes: [{
-              name: 'MainStack',
-              state: {
-                routes: [
-                  {
-                    name: "AppStack",
-                  }
-                ]
-              }
-            }]
-          })
-          console.log(response.data)
-          Alert.alert('Success', 'The payment was confirmed successfully.');
-        }
+        const response = await ApiRequest(paymentData)
+        Alert.alert('Success', 'The payment was confirmed successfully.');
         setIsLoading(false)
+        navigation.reset({
+          index: 0,
+          routes: [{
+            name: 'MainStack',
+            state: {
+              routes: [
+                {
+                  name: "AppStack",
+                }
+              ]
+            }
+          }]
+        })
       } else {
+        await finishTransaction({ purchase, isConsumable: true });
         setIsLoading(false)
         ToastMessage('Payment does not completed successfully. Try again later.')
         navigation.goBack()

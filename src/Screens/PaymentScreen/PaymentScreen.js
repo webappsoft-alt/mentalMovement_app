@@ -7,6 +7,7 @@ import {
   View,
   Platform,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import style from '../../assets/css/style';
@@ -26,7 +27,6 @@ import { initConnection, getProducts, flushFailedPurchasesCachedAsPendingAndroid
 import GooglePay from '../GooglePay/GooglePay';
 
 const PaymentScreen = () => {
-  const route = useRoute();
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -35,6 +35,7 @@ const PaymentScreen = () => {
   const [produc, setProduc] = useState([]);
 
   const getProduct = async () => {
+    setIsLoading(true)
     try {
       const connected = await initConnection();
 
@@ -50,7 +51,7 @@ const PaymentScreen = () => {
       }
     } catch (error) {
       console.log("errrr==>>>>>>", error)
-    }
+    } finally { setIsLoading(false) }
   }
 
   useEffect(() => {
@@ -71,17 +72,37 @@ const PaymentScreen = () => {
           animated={true}
           barStyle={'light-content'}
           backgroundColor={'#4d4d4d'}
-        // translucent={true}
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1 }}>
-            <Text
-              style={[style.font20Re, { fontFamily: fonts.bold, width: 300 }]}>
-              {t('MENTAL MOVEMENT/PREMIUM ACCESS')}
-              {/* style={[style.font20Re, {fontFamily: fonts.bold, width: 300}]}> */}
-            </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+              <Text
+                style={[style.font20Re, { fontFamily: fonts.bold, width: '70%' }]}>
+                {t('MENTAL MOVEMENT/PREMIUM ACCESS')}
+              </Text>
+              <Pressable onPress={() => {
+                navigation.reset({
+                  index: 0,
+                  routes: [{
+                    name: 'MainStack',
+                    state: {
+                      routes: [
+                        {
+                          name: "AppStack",
+                        }
+                      ]
+                    }
+                  }]
+                })
+              }}>
+                <Text
+                  style={[style.font20Re, { fontFamily: fonts.bold, }]}>
+                  {t('Skip')}
+                </Text>
+              </Pressable>
+            </View>
             <Text style={[style.font12Re, { marginVertical: 10 }]}>
               Come for the journey - Safe for the shift
             </Text>
@@ -116,11 +137,6 @@ const PaymentScreen = () => {
                 marginVertical: 10,
               }}>
               <Text style={[style.font12Re]}>{t('SUBSCRIBE TODAY')}</Text>
-              {/* <Text style={[style.font12Re, { textAlign: 'center' }]}>
-                {t(
-                  'Payment will be charged to your App Store/Play Store account at the confirmation of purchase',
-                )}
-              </Text> */}
               <Text
                 style={[
                   style.font12Re,
@@ -151,7 +167,6 @@ const PaymentScreen = () => {
 
         <GooglePay
           sku={selected}
-          data={route.params}
           setIsLoading={setIsLoading}
         />
       </ImageBackground>

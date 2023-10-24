@@ -205,8 +205,7 @@ const Home = () => {
               title={'Subscribe Now'}
               onPress={async () => {
                 toggleModal();
-                const id = await AsyncStorage.getItem('user_id');
-                navigation.navigate('PaymentScreen', { id: id });
+                navigation.navigate('PaymentScreen');
               }}
             />
           </View>

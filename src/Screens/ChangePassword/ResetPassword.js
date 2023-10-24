@@ -1,22 +1,22 @@
-import {StyleSheet, ScrollView, Text, View} from 'react-native';
-import React, {useState, useMemo} from 'react';
+import { StyleSheet, ScrollView, Text, View } from 'react-native';
+import React, { useState, useMemo } from 'react';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
-import {colors, fonts} from '../../constants';
-import {useNavigation} from '@react-navigation/native';
+import { colors, fonts } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InputBox from '../../components/InputBox';
 
 import Footer from '../../components/Footer';
 import style from '../../assets/css/style';
 import Button from '../../components/Button';
-import {BaseButton} from '../../components/BaseButton';
-import {validatePassword} from '../../utils/Validations';
-import {t} from 'i18next';
-import {useTranslation} from 'react-i18next';
+import { BaseButton } from '../../components/BaseButton';
+import { validatePassword } from '../../utils/Validations';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import ApiRequest from '../../services/ApiService';
-import {ToastMessage} from '../../utils/Toast';
-const ResetPassword = ({route}) => {
+import { ToastMessage } from '../../utils/Toast';
+const ResetPassword = ({ route }) => {
   const navigation = useNavigation();
   const OTPReset = route?.params?.OTPReset;
   console.log(OTPReset, 'OTP PASSWRS');
@@ -45,17 +45,7 @@ const ResetPassword = ({route}) => {
     setEyePressedCon(!isEyePressedCon);
   };
 
-  const {t} = useTranslation();
-  const {i18n} = useTranslation();
-
-  const toggleLanguage = () => {
-    // Check the current language and toggle to the opposite language
-    if (i18n.language === 'en') {
-      i18n.changeLanguage('es'); // Switch to Spanish
-    } else {
-      i18n.changeLanguage('en'); // Switch to English
-    }
-  };
+  const { t } = useTranslation();
 
   const handleUpdatePAssword = async () => {
     try {
@@ -87,13 +77,13 @@ const ResetPassword = ({route}) => {
   };
 
   return (
-    <Container customStyle={{paddingHorizontal: 0}}>
-      <View style={{marginVertical: 20, padding: 10}}>
+    <Container customStyle={{ paddingHorizontal: 0 }}>
+      <View style={{ marginVertical: 20, padding: 10 }}>
         <AuthHeader />
         <Text
           style={[
             style.font28Re,
-            {fontFamily: fonts.timenewregularroman, marginTop: 50},
+            { fontFamily: fonts.timenewregularroman, marginTop: 50 },
           ]}>
           {t('Reset Password')}
         </Text>
@@ -119,7 +109,7 @@ const ResetPassword = ({route}) => {
             placeholder={'New Password'}
             value={formData.newPassword}
             onChangeText={text => {
-              setFormData({...formData, newPassword: text});
+              setFormData({ ...formData, newPassword: text });
             }}
             isEye={true}
             onEyePress={onEyePress}
@@ -127,7 +117,7 @@ const ResetPassword = ({route}) => {
           />
           {!validatePassword(formData.newPassword) &&
             formData.newPassword?.length > 2 && (
-              <Text style={{top: -12, color: colors.red}}>
+              <Text style={{ top: -12, color: colors.red }}>
                 {' '}
                 Password must be 8 digits (Aa1234*/)
               </Text>
@@ -138,7 +128,7 @@ const ResetPassword = ({route}) => {
             placeholder={'Confirm Password'}
             value={formData.confirmPassword}
             onChangeText={text => {
-              setFormData({...formData, confirmPassword: text});
+              setFormData({ ...formData, confirmPassword: text });
             }}
             isEye={true}
             onEyePress={onEyePressCon}
@@ -146,7 +136,7 @@ const ResetPassword = ({route}) => {
           />
           {!validatePassword(formData.confirmPassword) &&
             formData.confirmPassword?.length > 2 && (
-              <Text style={{top: -12, color: colors.red}}>
+              <Text style={{ top: -12, color: colors.red }}>
                 {' '}
                 Password must be 8 digits (Aa1234*/)
               </Text>
@@ -158,11 +148,11 @@ const ResetPassword = ({route}) => {
               disabled={disable}
               // onPress={() => navigation.navigate('Login')}
               title={t('Change Password')}
-              defaultStyle={{width: '80%'}}
+              defaultStyle={{ width: '80%' }}
             />
           </View>
         </ScrollView>
-        <Footer agreed={false} textStyle={{color: colors.black}} />
+        <Footer agreed={false} textStyle={{ color: colors.black }} />
       </View>
     </Container>
   );

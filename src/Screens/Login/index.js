@@ -109,17 +109,6 @@ const Login = () => {
     }
   };
 
-  const { i18n } = useTranslation();
-
-  const toggleLanguage = () => {
-    // Check the current language and toggle to the opposite language
-    if (i18n.language === 'en') {
-      i18n.changeLanguage('es'); // Switch to Spanish
-    } else {
-      i18n.changeLanguage('en'); // Switch to English
-    }
-  };
-
   const handleGoogle = async () => {
     try {
       setIsLoading1('google');
