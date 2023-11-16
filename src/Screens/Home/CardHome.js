@@ -12,10 +12,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { colors, fonts } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ToastMessage } from '../../utils/Toast';
 
 const CardHome = ({ items, leng, subscription = '', toggleToast = () => "" }) => {
   const navigation = useNavigation();
-  console.log(items)
   return (
     <View style={{}}>
       <Text
@@ -33,11 +33,19 @@ const CardHome = ({ items, leng, subscription = '', toggleToast = () => "" }) =>
           return (
             <TouchableOpacity
               onPress={() => {
+                if (item.topic.audio_file_female == undefined) {
+                  ToastMessage("There is no currently file present in this category")
+                  return;
+                }
                 if (index < 3) {
                   navigation.navigate('HomeListScreen', {
                     title: items.name,
+                    name_german: items.name_german,
                     card_Title: item.name,
+                    cardgerman_Title: item.name_german,
                     topic: item.topic,
+                    desc: items.description,
+                    germa_desc: items.description_german
                   });
                   return;
                 }
@@ -46,8 +54,13 @@ const CardHome = ({ items, leng, subscription = '', toggleToast = () => "" }) =>
                 }
                 navigation.navigate('HomeListScreen', {
                   title: items.name,
+                  name_german: items.name_german,
                   card_Title: item.name,
+                  cardgerman_Title: item.name_german,
                   topic: item.topic,
+                  desc: items.description,
+                  germa_desc: items.description_german
+
                 });
               }}>
               <ImageBackground

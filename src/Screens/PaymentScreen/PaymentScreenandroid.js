@@ -108,9 +108,9 @@ const PaymentScreen = () => {
                   style.font12Re,
                   { textAlign: 'center', marginVertical: 10 },
                 ]}>
-                {t(
+                {/* {t(
                   'When subscription will be expired you can use access these program free for forever. Training Day Morning, Training Day Evening, Competition Day Morning, Competition Day Evening',
-                )}
+                )} */}
               </Text>
               <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => navigation.navigate('Terms')}>

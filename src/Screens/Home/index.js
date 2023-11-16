@@ -97,13 +97,28 @@ const Home = () => {
       type: 'subscription_days',
       user_id: id,
     };
+    const userData = {
+      type: 'get_data',
+      table_name: 'users',
+      id: id,
+    };
+
     try {
       const res = await ApiRequest(ApiData);
-      setSubscription(res.data.subscription_remaining_day);
-      if (res.data.subscription_remaining_day == 0) {
-        // toggleToast(); 
+      const respo = await ApiRequest(userData);
+      // console.log(respo.data.data)
+      const days = calculateDaysPassed(new Date(respo.data.data[0].timestamp), new Date())
+      if (res.data.subscription_remaining_day == 0 && days < 7) {
+        setSubscription(7);
+      } else {
+        setSubscription(res.data.subscription_remaining_day);
       }
     } catch (error) { }
+  };
+
+  const calculateDaysPassed = (startDate, endDate) => {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    return Math.round(Math.abs((endDate - startDate) / oneDay));
   };
 
   useFocusEffect(

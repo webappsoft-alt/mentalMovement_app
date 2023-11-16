@@ -62,7 +62,7 @@ const SubcriptionCard = ({
         </Text>
       </View>
       <Text style={[style.font10Re, { color: colors.black }]}>
-        {t('trial')}
+        {(item == 'com.mentalmovement.001' || item == 'com.mentalmovement.001c') ? t('trial7') : t('trial30')}
       </Text>
     </TouchableOpacity>
   );

@@ -61,18 +61,26 @@ const Signup = () => {
         email: formData.email.toLowerCase(),
       });
       const resp = res?.data.result;
+      console.log(res.data)
       if (resp) {
-        const registerd = await ApiRequest({
-          type: 'register',
-          email: formData.email.toLowerCase(),
-          ...formData,
-        });
-        if (registerd?.data?.result) {
-          console.log('respppppppp', registerd.data.name)
-          await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
-          await AsyncStorage.setItem('name', registerd?.data.name);
-          navigation.navigate('PaymentScreen');
-        }
+        const respon = await ApiRequest({
+          type: "email_send",
+          email: formData.email.toLowerCase()
+        })
+
+        console.log(respon.data)
+        // VerifyCode
+        // const registerd = await ApiRequest({
+        //   type: 'register',
+        //   email: formData.email.toLowerCase(),
+        //   ...formData,
+        // });
+        // if (registerd?.data?.result) {
+        //   console.log('respppppppp', registerd.data.name)
+        //   await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
+        //   await AsyncStorage.setItem('name', registerd?.data.name);
+        navigation.navigate('VerifyCode', { OTP: respon.data.code, formData: formData, signup: true });
+        // }
       } else {
         ToastMessage('email is already registered');
       }

@@ -32,8 +32,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastMessage } from '../../utils/Toast';
 import { decode, encode } from 'base-64';
 import { useFocusEffect } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
+  const { t } = useTranslation()
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -315,7 +317,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
       <View style={{ marginLeft: 20, top: -50 }}>
         <Text style={[style.font16Re, { fontFamily: fonts.bold }]}>{title}</Text>
         <Text style={[style.font16Re, { fontFamily: fonts.bold }]}>
-          {subTitle} Voice
+          {subTitle} {t("Voice")}
         </Text>
       </View>
 
@@ -418,7 +420,14 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
               <Forword />
             </TouchableOpacity>
           </View>
-          <View style={{ width: 18 }} />
+          {downloadMsg === true ? (
+            <ActivityIndicator color={colors.white} />
+          ) : (
+            <TouchableOpacity
+              onPress={() => fileViewinReact(audioFile.split('/').pop())}>
+              <Download />
+            </TouchableOpacity>
+          )}
         </View>
         <View
           style={{
@@ -429,16 +438,9 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
             alignSelf: 'center',
             marginVertical: 30,
           }}>
-          <Heart />
-          {downloadMsg === true ? (
-            <ActivityIndicator color={colors.white} />
-          ) : (
-            <TouchableOpacity
-              onPress={() => fileViewinReact(audioFile.split('/').pop())}>
-              <Download />
-            </TouchableOpacity>
-          )}
-          <More />
+          {/* <Heart /> */}
+
+          {/* <More /> */}
         </View>
       </View>
     </View>

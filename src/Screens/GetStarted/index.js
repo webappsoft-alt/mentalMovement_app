@@ -9,16 +9,16 @@ import {
   Platform,
 } from 'react-native';
 import Button from '../../components/Button';
-import {useNavigation} from '@react-navigation/native';
-import {colors} from '../../constants';
-import {BaseButton} from '../../components/BaseButton';
+import { useNavigation } from '@react-navigation/native';
+import { colors } from '../../constants';
+import { BaseButton } from '../../components/BaseButton';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
-import {useTranslation} from 'react-i18next';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import { useTranslation } from 'react-i18next';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const GetStarted = () => {
   const navigation = useNavigation();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <ImageBackground
       source={require('../../assets/images/png/start_img.png')}
@@ -34,16 +34,17 @@ const GetStarted = () => {
         translucent={true}
       />
       <View style={styles.container}>
-        <Image
+        {/* <Image
           source={require('../../assets/images/png/logo.png')}
           style={{height: 70, width: 190, alignSelf: 'center'}}
-        />
+        /> */}
+        <View />
 
         <View style={styles.buttonContainer}>
           <BaseButton
             title={t('Get Started')}
-            defaultStyle={{backgroundColor: colors.white}}
-            textStyle={{color: colors.black}}
+            defaultStyle={{ backgroundColor: colors.white }}
+            textStyle={{ color: colors.black }}
             onPress={() => navigation.navigate('Login')}
           />
         </View>

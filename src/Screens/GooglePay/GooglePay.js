@@ -7,10 +7,12 @@ import { ToastMessage } from '../../utils/Toast';
 import { colors, fonts } from '../../constants';
 import { requestPurchase, purchaseErrorListener, purchaseUpdatedListener, finishTransaction } from "react-native-iap";
 import style from '../../assets/css/style';
+import { useTranslation } from 'react-i18next';
 
 function GooglePay({ setIsLoading = () => "", sku = '' }) {
 
   const navigation = useNavigation()
+  const { t } = useTranslation()
 
   const pay = async () => {
     console.log("rrrrr==>>", sku)
@@ -95,16 +97,42 @@ function GooglePay({ setIsLoading = () => "", sku = '' }) {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: Platform.OS == 'android' ? 0 : 15
+          marginBottom: 15
         }}
         onPress={pay}>
         <Text style={[style.font18Re, { color: colors.black, fontFamily: fonts.semiBold }]}>
-          Subscribe Now
+          {t("Subscribe Now")}
         </Text>
-        {/* <Image source={require('../../assets/search.png')} style={{ width: 18, height: 18, marginHorizontal: 2, marginLeft: 5 }} />
-            <Text style={[style.font18Re, { color: colors.black, fontFamily: fonts.semiBold }]}>
-              Pay
-            </Text> */}
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          width: '100%',
+          height: 50,
+          backgroundColor: colors.black,
+          borderRadius: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: Platform.OS == 'android' ? 0 : 15
+        }}
+        onPress={() => {
+          navigation.reset({
+            index: 0,
+            routes: [{
+              name: 'MainStack',
+              state: {
+                routes: [
+                  {
+                    name: "AppStack",
+                  }
+                ]
+              }
+            }]
+          })
+        }}>
+        <Text style={[style.font18Re, { color: colors.white, fontFamily: fonts.semiBold }]}>
+          7-Day Trial
+        </Text>
       </TouchableOpacity>
     </View>
   );
