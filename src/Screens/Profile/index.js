@@ -32,7 +32,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
   const navigation = useNavigation();
-  const {t} = useTranslation();
   const [isSpanish, setIsSpanish] = useState(false);
 
   const data = [
@@ -110,6 +109,8 @@ const Profile = () => {
   //   // Toggle the language between English and Spanish
   //   setCurrentLanguage(currentLanguage === 'English' ? 'Spanish' : 'English');
   // };
+
+  const {t} = useTranslation();
   const {i18n} = useTranslation();
 
   // const toggleLanguage = () => {
