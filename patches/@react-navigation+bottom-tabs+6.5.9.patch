@@ -1,0 +1,34 @@
+diff --git a/node_modules/@react-navigation/bottom-tabs/src/views/BottomTabBar.tsx b/node_modules/@react-navigation/bottom-tabs/src/views/BottomTabBar.tsx
+index 96469a2..69aa987 100644
+--- a/node_modules/@react-navigation/bottom-tabs/src/views/BottomTabBar.tsx
++++ b/node_modules/@react-navigation/bottom-tabs/src/views/BottomTabBar.tsx
+@@ -322,15 +322,15 @@ export default function BottomTabBar({
+             options.tabBarLabel !== undefined
+               ? options.tabBarLabel
+               : options.title !== undefined
+-              ? options.title
+-              : route.name;
++                ? options.title
++                : route.name;
+ 
+           const accessibilityLabel =
+             options.tabBarAccessibilityLabel !== undefined
+               ? options.tabBarAccessibilityLabel
+               : typeof label === 'string' && Platform.OS === 'ios'
+-              ? `${label}, tab, ${index + 1} of ${routes.length}`
+-              : undefined;
++                ? `${label}, tab, ${index + 1} of ${routes.length}`
++                : undefined;
+ 
+           return (
+             <NavigationContext.Provider
+@@ -386,7 +386,8 @@ const styles = StyleSheet.create({
+     elevation: 8,
+   },
+   content: {
+-    flex: 1,
++    // flex: 1,
+     flexDirection: 'row',
++    height: 40
+   },
+ });

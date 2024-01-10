@@ -5,29 +5,27 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, { useMemo, useState } from 'react';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
-import {colors, fonts} from '../../constants';
-import {useNavigation} from '@react-navigation/native';
+import { colors, fonts } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InputBox from '../../components/InputBox';
 
 import Footer from '../../components/Footer';
 import style from '../../assets/css/style';
-import Button from '../../components/Button';
-import {BaseButton} from '../../components/BaseButton';
-import {Email, Users} from '../../assets/images';
-import {useTranslation} from 'react-i18next';
-import {ToastMessage} from '../../utils/Toast';
+import { BaseButton } from '../../components/BaseButton';
+import { useTranslation } from 'react-i18next';
+import { ToastMessage } from '../../utils/Toast';
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const VerifyCode = ({route}) => {
+const VerifyCode = ({ route }) => {
   const navigation = useNavigation();
   const [data, setData] = useState({
     code: '',
   });
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [isFormValid, setIsFormValid] = useState(false);
   const [isEyePressed, setEyePressed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,33 +40,20 @@ const VerifyCode = ({route}) => {
   // console.log(OTP, formData);
 
   const Otpverified = async () => {
-    setIsLoading(true);
 
-    if (OTP === parseInt(data.code)) {
-      // setIsLoading(false);
+    if (route?.params?.signup) {
       try {
         setIsLoading(true);
-        const res = await ApiRequest({
+        const registerd = await ApiRequest({
           type: 'register',
           email: formData.email.toLowerCase(),
-          password: formData.password,
-          first_name: formData.first_name,
-          last_name: formData.last_name,
+          ...formData,
         });
-        const resp = res?.data?.result;
-
-        console.log('1');
-        console.log(res.data);
-        if (resp) {
-          const id = JSON.stringify(res?.data?.user_id);
-          console.log('redsfdfnsdkjfjhsdfgjhsdfg');
-
-          // const user_type = res?.data?.user_type;
-          await AsyncStorage.setItem('user_id', id);
-
-          navigation.navigate('MainStack', {screen: 'AppStack'});
-          setIsLoading(false);
-          // setFormData({email: '', password: ''});
+        if (registerd?.data?.result) {
+          console.log('respppppppp', registerd.data)
+          await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
+          await AsyncStorage.setItem('name', registerd?.data.name);
+          navigation.navigate('PaymentScreen');
         } else {
           console.log('3');
           ToastMessage(res.data?.message);
@@ -78,29 +63,26 @@ const VerifyCode = ({route}) => {
         setIsLoading(false);
         console.log(error);
       }
-      // navigation.navigate('MainStack', {screen: 'AppStack'});
-    } else if (OTPReset.code === parseInt(data.code)) {
-      setIsLoading(false);
-      navigation.navigate('ResetPassword', {OTPReset: OTPReset});
+    } else {
+      navigation.navigate('ResetPassword', { OTPReset: OTPReset });
     }
   };
 
   // const [value, setValue] = useState('');
   const validateForm = useMemo(() => {
-    const valueValid = data?.code?.length === 4;
-    return valueValid;
+    return data?.code == OTP ? true : false
   }, [data.code]);
 
   return (
-    <Container customStyle={{paddingHorizontal: 0}}>
-      <View style={{marginVertical: 20, padding: 10}}>
+    <Container customStyle={{ paddingHorizontal: 0 }}>
+      <View style={{ marginVertical: 20, padding: 10 }}>
         <AuthHeader />
         <Text
           style={[
             style.font28Re,
-            {fontFamily: fonts.timenewregularroman, marginTop: 50},
+            { fontFamily: fonts.timenewregularroman, marginTop: 50 },
           ]}>
-          {t('Reset Password')}
+          {t('Verify Email')}
         </Text>
       </View>
       <View style={styles.container}>
@@ -117,7 +99,7 @@ const VerifyCode = ({route}) => {
                 marginVertical: 20,
               },
             ]}>
-            Enter $-Digit Code
+            Enter 4 Digit Code
           </Text>
 
           <InputBox
@@ -126,7 +108,7 @@ const VerifyCode = ({route}) => {
             KT={'number-pad'}
             value={data.code}
             onChangeText={text => {
-              setData({...data, code: text});
+              setData({ ...data, code: text });
             }}
           />
 
@@ -140,10 +122,10 @@ const VerifyCode = ({route}) => {
                 )
               }
               disabled={!validateForm}
-              defaultStyle={{width: '80%'}}
+              defaultStyle={{ width: '80%' }}
               onPress={Otpverified}
             />
-            <Text
+            {/* <Text
               style={[
                 style.font14Re,
                 {
@@ -155,10 +137,10 @@ const VerifyCode = ({route}) => {
                 },
               ]}>
               Send Again
-            </Text>
+            </Text> */}
           </View>
         </ScrollView>
-        <Footer agreed={false} textStyle={{color: colors.black}} />
+        <Footer agreed={false} textStyle={{ color: colors.black }} />
       </View>
     </Container>
   );

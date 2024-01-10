@@ -48,11 +48,11 @@ const ExploreCard = ({items, time, leng, onPress}) => {
                 }}>
                 <Text
                   style={[style.font16, {fontFamily: fonts.bold, width: 200}]}>
-                  {leng === 'es' ? items.name_german : items.name}
+                  {leng === 'es' ? item.name_german : item.name}
                 </Text>
-                <Text style={[style.font12, {fontFamily: fonts.medium}]}>
+                {/* <Text style={[style.font12, {fontFamily: fonts.medium}]}>
                   {'time'}
-                </Text>
+                </Text> */}
               </ImageBackground>
             </TouchableOpacity>
           );

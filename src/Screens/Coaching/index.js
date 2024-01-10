@@ -1,34 +1,38 @@
 import {
   StyleSheet,
-  ImageBackground,
+  View,
+  Platform,
+  Image,
   Text,
   Linking,
-  View,
-  TextInput,
-  FlatList,
-  Button,
-  ScrollView,
-  TouchableOpacity,
 } from 'react-native';
-import React, {useEffect} from 'react';
-import Container from '../../components/Container';
-import {AppLogo, Drawer, Heart} from '../../assets/images';
+import React from 'react';
+import { WebView } from 'react-native-webview';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { BaseButton } from '../../components/BaseButton';
+import { colors } from '../../constants';
 import style from '../../assets/css/style';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {WebView} from 'react-native-webview';
 const Coaching = () => {
-  const navigation = useNavigation();
-
+  const webviewBackgroundColorScript = `
+  const style = document.createElement('style');
+  style.innerHTML = 'body { background-color: black !important; }';
+  document.head.appendChild(style);
+`;
   return (
-    <Container>
-      <WebView
-        source={{
-          uri: 'https://www.mental-movement.de/high-performance-coaching/',
-        }}
-        style={{flex: 1}}
+    <View style={{ flex: 1, backgroundColor: 'black', paddingTop: Platform.OS !== 'ios' ? 10 : getStatusBarHeight() + 30, paddingBottom: Platform.OS == 'ios' ? 10 : getStatusBarHeight() + 30, paddingHorizontal: 16 }}>
+
+      <Image source={require('../../assets/Marco.jpg')} style={{ width: '100%', height: 250, borderRadius: 10, marginBottom: 20 }} />
+      <Text style={style.title}>Coaching</Text>
+      <Text style={style.subTitle}>Mental Movement bietet sowohl 1:1-Coachings als auch Gruppencoachings für Sportler*Innen. Lass Dich von Dr. Marco Rathschlag & seinen Coaches aufs nächste Level bringen</Text>
+      <BaseButton
+        title={"JETZT MEHR ERFAHREN"}
+        textStyle={{ color: colors.black }}
+        defaultStyle={{ width: '80%', marginVertical: 24, backgroundColor: colors.white }}
+        onPress={() =>
+          Linking.openURL("https://www.mental-movement.de/high-performance-coaching/")
+        }
       />
-    </Container>
+    </View>
   );
 };
 

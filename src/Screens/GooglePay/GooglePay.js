@@ -1,116 +1,63 @@
 import React, { useEffect } from 'react';
-import { View, Alert, Platform } from 'react-native';
-import {
-  PlatformPayButton,
-  usePlatformPay,
-  PlatformPay,
-} from '@stripe/stripe-react-native';
+import { View, Alert, Platform, Image, TouchableOpacity, Text } from 'react-native';
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { ToastMessage } from '../../utils/Toast';
+import { colors, fonts } from '../../constants';
+import { requestPurchase, purchaseErrorListener, purchaseUpdatedListener, finishTransaction } from "react-native-iap";
+import style from '../../assets/css/style';
+import { useTranslation } from 'react-i18next';
 
-const API_URL = 'YOUR_API_URL'; // Replace with your server's API URL
+function GooglePay({ setIsLoading = () => "", sku = '' }) {
 
-function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
-
-  const { isPlatformPaySupported, confirmPlatformPayPayment } = usePlatformPay();
   const navigation = useNavigation()
-
-  React.useEffect(() => {
-    (async function () {
-      if (!(await isPlatformPaySupported({ googlePay: { testEnv: true } }))) {
-        Alert.alert('Google Pay is not supported.');
-        return;
-      }
-    })();
-  }, []);
-  const googlePay = {
-    googlePay: {
-      testEnv: true,
-      merchantName: 'My merchant name',
-      merchantCountryCode: 'US',
-      currencyCode: 'USD',
-      billingAddressConfig: {
-        format: PlatformPay.BillingAddressFormat.Full,
-        isPhoneNumberRequired: true,
-        isRequired: true,
-      },
-    },
-  }
-
-  const ApplePay = {
-    applePay: {
-      cartItems: [
-        {
-          label: 'Example item name',
-          amount: selected == '1' ? '6.99' : '69.99',
-          paymentType: PlatformPay.PaymentType.Immediate,
-        },
-        {
-          label: 'Total',
-          amount: selected == '1' ? '6.99' : '69.99',
-          paymentType: PlatformPay.PaymentType.Immediate,
-        },
-      ],
-      merchantCountryCode: 'US',
-      currencyCode: 'USD',
-      requiredShippingAddressFields: [
-        PlatformPay.ContactField.PostalAddress,
-      ],
-      requiredBillingContactFields: [PlatformPay.ContactField.PhoneNumber],
-    },
-  }
-
+  const { t } = useTranslation()
 
   const pay = async () => {
-    if (!selected) return;
+    console.log("rrrrr==>>", sku)
+    if (!sku) return ToastMessage('Please choose a subscription plan before checkout.');
     setIsLoading(true)
-    try {
-      const ApiData = {
-        type: 'payment_intent',
-        amount: selected == '1' ? '6.99' : '69.99'
+    const params = Platform.select({
+      ios: {
+        sku: sku,
+        andDangerouslyFinishTransactionAutomaticallyIOS: false
+      },
+      android: {
+        skus: [sku]
       }
-      const res = await ApiRequest(ApiData)
-      const clientSecret = res.data.intent
-      console.log("clientSecret==>>", clientSecret)
+    })
+    requestPurchase(params).catch((error) => {
+      console.log(error)
+      setIsLoading(false)
+    })
+  };
 
-      const { error, paymentIntent } = await confirmPlatformPayPayment(
-        clientSecret,
-        Platform.OS == 'android' ? googlePay : ApplePay
-      );
+  useEffect(() => {
+    const purchaseErrorSubscription = purchaseErrorListener(async (error) => {
+      setIsLoading(false)
+      ToastMessage(JSON.stringify(error.message))
+      navigation.goBack()
+    });
 
-      console.log("paymentIntent", paymentIntent)
+    const purchaseUpdateSubscription = purchaseUpdatedListener(async (purchase) => {
+      const receipt = purchase.transactionReceipt;
 
-
-      if (error) {
-        Alert.alert(error.code, error.message);
-        // Update UI to prompt user to retry payment (and possibly another payment method)
-        return;
-      }
-      let resp = false
-      if (data.id) {
-        resp = true
-      } else {
-        const registerd = await ApiRequest(data);
-        resp = registerd?.data?.result;
-        await AsyncStorage.setItem('user_id', String(registerd?.data?.user_id));
-      }
-
-
-      if (resp) {
+      if (receipt) {
+        await finishTransaction({ purchase, isConsumable: true });
+        const user_id = await AsyncStorage.getItem('user_id');
         const paymentData = {
           type: 'add_data',
           table_name: 'payment_subscriptions',
-          user_id: data.id ? data.id : registerd?.data?.user_id,
-          status: error ? 'failure' : 'success',
-          payment_response: error ? JSON.stringify(error) : JSON.stringify(paymentIntent),
-          plan_type: selected == '1' ? 'monthly' : "yearly"
+          user_id: user_id,
+          status: 'success',
+          payment_response: JSON.stringify(purchase),
+          plan_type: sku == 'com.mentalmovement.001c' ? 'monthly' : "yearly"
         }
 
-
-
         const response = await ApiRequest(paymentData)
-        console.log("paymentData", response.data)
+        Alert.alert('Success', 'The payment was confirmed successfully.');
+        setIsLoading(false)
         navigation.reset({
           index: 0,
           routes: [{
@@ -124,29 +71,69 @@ function GooglePay({ data = {}, setIsLoading = () => "", selected = '' }) {
             }
           }]
         })
-        console.log(response.data)
-        Alert.alert('Success', 'The payment was confirmed successfully.');
+      } else {
+        await finishTransaction({ purchase, isConsumable: true });
+        setIsLoading(false)
+        ToastMessage('Payment does not completed successfully. Try again later.')
+        navigation.goBack()
       }
+    });
 
 
-    } catch (error) {
-      console.log("Errrr==>>", error)
-
-    } finally {
-      setIsLoading(false)
-    }
-  };
+    return () => {
+      purchaseErrorSubscription && purchaseErrorSubscription.remove();
+      purchaseUpdateSubscription && purchaseUpdateSubscription.remove();
+    };
+  }, []);
 
   return (
     <View>
-      <PlatformPayButton
-        type={PlatformPay.ButtonType.Pay}
-        onPress={pay}
+      <TouchableOpacity
         style={{
           width: '100%',
           height: 50,
+          backgroundColor: colors.white,
+          borderRadius: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 15
         }}
-      />
+        onPress={pay}>
+        <Text style={[style.font18Re, { color: colors.black, fontFamily: fonts.semiBold }]}>
+          {t("Subscribe Now")}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          width: '100%',
+          height: 50,
+          backgroundColor: colors.black,
+          borderRadius: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: Platform.OS == 'android' ? 0 : 15
+        }}
+        onPress={() => {
+          navigation.reset({
+            index: 0,
+            routes: [{
+              name: 'MainStack',
+              state: {
+                routes: [
+                  {
+                    name: "AppStack",
+                  }
+                ]
+              }
+            }]
+          })
+        }}>
+        <Text style={[style.font18Re, { color: colors.white, fontFamily: fonts.semiBold }]}>
+          7-Day Trial
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

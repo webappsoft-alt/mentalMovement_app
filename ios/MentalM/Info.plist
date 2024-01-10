@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>MentalM</string>
+	<string>Mental Movement</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,15 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.319958759561-ob9vvi8ojaipv03ft529b0nre1prkju5</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb995157451740357</string>
+				<string>com.googleusercontent.apps.319958759561-4na7m40rb4aai3pnlkjf9nhn5hcfeu3j</string>
 			</array>
 		</dict>
 	</array>
@@ -60,14 +52,20 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Mental Movement needs access to upload files and pictures</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Mental Movement want to access camera to upload picture</string>
 	<key>NSDownloadsUsageDescription</key>
-	<string>Your app needs access to the Downloads folder to save downloaded files.</string>
+	<string>Mental Movement needs access to the Downloads folder to save downloaded files.</string>
 	<key>NSFileProtection</key>
 	<string>CompleteUnlessOpen</string>
 	<key>NSFileUsageDescription</key>
-	<string>Your app needs access to the device's storage to save downloaded files.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Mental Movement needs access to the device's storage to save downloaded files.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Mental Movement needs access to upload files and pictures</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Mental Movement needs access to upload files and pictures</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>

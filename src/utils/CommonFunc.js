@@ -1,3 +1,10 @@
+import { Platform } from "react-native";
+
+export const ANNUALLY_REPORT = Platform.select({ ios: 'com.mentalmovement.002c', android: 'com.mentalmovement.002' });
+export const MONTHLY_REPORT = Platform.select({ ios: 'com.mentalmovement.001c', android: 'com.mentalmovement.001' });
+
+// export const ITEM_SKUS = ['com.mentalmovement.001', 'com.mentalmovement.002'];
+export const ITEM_SKUS = [MONTHLY_REPORT, ANNUALLY_REPORT];
 
 export const formatAMPM = date => {
      var hours = date.getHours();

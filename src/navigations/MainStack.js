@@ -24,7 +24,12 @@ import Explore from '../Screens/Explore';
 import ExploreTraning from '../Screens/ExploreTraning/ExploreTraning';
 import Coaching from '../Screens/Coaching';
 import { useTranslation } from 'react-i18next';
-import PaymentScreen from '../Screens/PaymentScreen';
+import AboutUs from '../Screens/AboutUs';
+import Downloads from '../Screens/Downloads';
+import Privacy from '../Screens/Privacy';
+import Terms from '../Screens/Terms';
+import PaymentScreen from '../Screens/PaymentScreen/PaymentScreen';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const MainStack = () => {
@@ -37,11 +42,15 @@ const MainStack = () => {
       <Stack.Screen name="AppStack" component={AppStack} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="ChnagePassword" component={ChnagePassword} />
+      <Stack.Screen name="AboutUs" component={AboutUs} options={{ headerShown: true, headerTitle: 'About Us' }} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="GoogleFit" component={GoogleFit} />
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
       <Stack.Screen name="HomeListScreen" component={HomeListScreen} />
       <Stack.Screen name="MediaPlayerAudio" component={MediaPlayerAudio} />
+      <Stack.Screen name="Downloads" component={Downloads} />
+      <Stack.Screen name="Privacy" component={Privacy} />
+      <Stack.Screen name="Terms" component={Terms} />
       <Stack.Screen name="ExploreTraning" component={ExploreTraning} />
     </Stack.Navigator>
   );
@@ -51,16 +60,19 @@ const AppStack = () => {
   const androidTab = {
     height: 60,
     width: '90%',
+    justifyContent: 'center',
+    paddingTop: 10,
     borderRadius: 20,
     position: 'absolute',
     left: 20,
-    bottom: 10,
+    bottom: 15,
   };
 
   return (
     <ImageBackground
       source={require('../assets/images/png/start_img.png')}
-      style={{ flex: 1 }}>
+      style={{ flex: 1 }}
+    >
       <Tab.Navigator
         screenOptions={{
           headerShown: false,

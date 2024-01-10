@@ -10,6 +10,7 @@
   "Settings": "Einstellungen",
   "Version": "Version",
   "Logout": "Abmelden",
+  "Delete account": "Konto löschen",
   "Language": "Sprache",
 
   "Home": "Home",
@@ -72,13 +73,16 @@
   "Reset Password": "Passwort zurücksetzen",
   "New Password": "Neues Passwort",
   "Confirm Password": "Passwort bestätigen",
+  "trial30": "Jetzt 30% sparen. Normalpreis: 99,99 $/Jahr",
+  "trial7": "Jetzt 30% sparen. Normalpreis: 9,99 $/Monat",
+  "subscripiton": "Sie müssen ein Abonnement abschließen, um auf diesen bestimmten Dienst zugreifen und ihn nutzen zu können, da Sie ihn derzeit nicht abonniert haben.",
 
   "Reset Password with Email": "Passwort mit E-Mail zurücksetzen",
   "Verify Email": "E-Mail verifizieren",
 
   "Use Trial for 7 days Free": "7 Tage kostenlose Testversion nutzen",
   "save 30% off": "30% sparen",
-  "MENTAL MOVEMENT/PREMIUM ACCESS": "MENTAL MOVEMENT/PREMIUM ZUGANG",
+  "MENTAL MOVEMENT/PREMIUM ACCESS": "Mental Movement kostenlos testen",
   "Join the Mental Movement App to boost your mental health & performance": "Lade Dir jetzt die Mental Movement App herunter, um deine mentale Gesundheit und Deine Performance als SportlerIn zu steigern",
   "Gain exclusive access to Hypnosis & Meditations audio files from Dr. Marco Rathschlag & his team especially designed for athletes to enhance their performance": "Erhalte exklusiven Zugang zu Hypnose- und Meditations-Audiodateien von Dr. Marco Rathschlag und seinem Team, die speziell für Athleten entwickelt wurden, um ihre Leistung zu steigern",
   "Create a playlist of your favorite tracks, listen offline and and unlock your full potential in your sport": "Erstelle eine Wiedergabeliste Deiner Lieblingstitel, höre diese auch offline und entfessele Dein volles Potenzial in Deinem Sport",
@@ -123,5 +127,9 @@
   "We may update this Privacy Policy to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any changes by posting the updated Privacy Policy in the app.": "Wir können diese Datenschutzrichtlinie aktualisieren, um Änderungen in unseren Praktiken oder aus anderen betrieblichen, rechtlichen oder regulatorischen Gründen widerzuspiegeln. Wir werden Sie über Änderungen informieren, indem wir die aktualisierte Datenschutzrichtlinie in der App veröffentlichen",
   "Contact Us": "Kontaktiere uns",
   "If you have questions or concerns about this Privacy Policy or our data practices, please contact us at [info@mental-movement.de].": "Wenn Du Fragen oder Anregungen hast über unsere Datenschutzrichtlinie kannst du uns jederzeit kontaktieren unter info@mental-movement.de",
-  "By using the “Mental Movement” app, you acknowledge that you have read and understood this Privacy Policy and agree to its terms and conditions.": "Durch die Nutzung der App „Mental Movement“ erkennen Sie an, dass Sie diese Datenschutzrichtlinie gelesen und verstanden haben und den darin enthaltenen Bedingungen zustimmen."
+  "By using the “Mental Movement” app, you acknowledge that you have read and understood this Privacy Policy and agree to its terms and conditions.": "Durch die Nutzung der App „Mental Movement“ erkennen Sie an, dass Sie diese Datenschutzrichtlinie gelesen und verstanden haben und den darin enthaltenen Bedingungen zustimmen.",
+  "germanMale": "Männlich",
+  "femaleGermal": "Weiblich",
+  "Voice": "Stimme",
+  "Subscribe Now": "Kostenlos testen und abonnieren"
 }

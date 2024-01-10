@@ -5,23 +5,23 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState, useMemo} from 'react';
+import React, { useState, useMemo } from 'react';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
-import {colors, fonts} from '../../constants';
-import {useNavigation} from '@react-navigation/native';
+import { colors, fonts } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InputBox from '../../components/InputBox';
 
 import Footer from '../../components/Footer';
 import style from '../../assets/css/style';
 import Button from '../../components/Button';
-import {BaseButton} from '../../components/BaseButton';
-import {Email, Users} from '../../assets/images';
-import {useTranslation} from 'react-i18next';
+import { BaseButton } from '../../components/BaseButton';
+import { Email, Users } from '../../assets/images';
+import { useTranslation } from 'react-i18next';
 import ApiRequest from '../../services/ApiService';
-import {validateEmail} from '../../utils/Validations';
-import {ToastMessage} from '../../utils/Toast';
+import { validateEmail } from '../../utils/Validations';
+import { ToastMessage } from '../../utils/Toast';
 
 const VerifyEmail = () => {
   const navigation = useNavigation();
@@ -41,7 +41,7 @@ const VerifyEmail = () => {
   const onEyePress = () => {
     setEyePressed(!isEyePressed);
   };
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
   const handleEmailVerified = async () => {
@@ -63,6 +63,8 @@ const VerifyEmail = () => {
         navigation.navigate('VerifyCode', {
           // formData: formData,
           OTPReset: res?.data,
+          OTP: res.data.code,
+          signup: false
         });
       } else {
         setIsLoading(false);
@@ -75,13 +77,13 @@ const VerifyEmail = () => {
     }
   };
   return (
-    <Container customStyle={{paddingHorizontal: 0}}>
-      <View style={{marginVertical: 20, padding: 10}}>
+    <Container customStyle={{ paddingHorizontal: 0 }}>
+      <View style={{ marginVertical: 20, padding: 10 }}>
         <AuthHeader />
         <Text
           style={[
             style.font28Re,
-            {fontFamily: fonts.timenewregularroman, marginTop: 50},
+            { fontFamily: fonts.timenewregularroman, marginTop: 50 },
           ]}>
           {t('Reset Password')}
         </Text>
@@ -109,12 +111,12 @@ const VerifyEmail = () => {
             KT={'email-address'}
             value={data.email}
             onChangeText={text => {
-              setData({...data, email: text});
+              setData({ ...data, email: text });
             }}
             Icon={() => <Email />}
           />
           {!validateEmail(data.email) && data.email.length > 2 && (
-            <Text style={{top: -12, color: colors.red}}>
+            <Text style={{ top: -12, color: colors.red }}>
               {' '}
               Enter valid email (abc@gmail.com)
             </Text>
@@ -130,10 +132,10 @@ const VerifyEmail = () => {
               }
               onPress={handleEmailVerified}
               disabled={disable}
-              defaultStyle={{width: '80%', marginVertical: 24}}
-              // onPress={() =>
-              //   navigation.navigate('MainStack', {screen: 'AppStack'})
-              // }
+              defaultStyle={{ width: '80%', marginVertical: 24 }}
+            // onPress={() =>
+            //   navigation.navigate('MainStack', {screen: 'AppStack'})
+            // }
             />
             {/* <BaseButton
               title={t('Verify Email')}
@@ -153,7 +155,7 @@ const VerifyEmail = () => {
               ]}></Text>
           </View>
         </ScrollView>
-        <Footer agreed={false} textStyle={{color: colors.black}} />
+        <Footer agreed={false} textStyle={{ color: colors.black }} />
       </View>
     </Container>
   );

@@ -10,6 +10,7 @@
   "Settings": "Settings",
   "Version": "Version 9.3.2.1",
   "Logout": "Logout",
+  "Delete account": "Delete account",
   "Language": "Language",
   "Home": "Home",
   "Explore": "Explore",
@@ -72,6 +73,8 @@
   "Reset Password": "Reset Password",
   "New Password": "New Password",
   "Confirm Password": "Confirm Password",
+  "trial": "Use Trial for 7 days Free",
+  "subscripiton": "You must obtain a subscription plan in order to access and utilize that particular service, as you are not currently subscribed to it.",
 
   "Reset Password with Email": "Reset Password with Email",
   "Verify Email": "Verify Email",
@@ -120,5 +123,9 @@
   "We may update this Privacy Policy to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any changes by posting the updated Privacy Policy in the app.": "We may update this Privacy Policy to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any changes by posting the updated Privacy Policy in the app.",
   "Contact Us": "Contact Us",
   "If you have questions or concerns about this Privacy Policy or our data practices, please contact us at [info@mental-movement.de].": "If you have questions or concerns about this Privacy Policy or our data practices, please contact us at [info@mental-movement.de].",
-  "By using the “Mental Movement” app, you acknowledge that you have read and understood this Privacy Policy and agree to its terms and conditions.": "By using the “Mental Movement” app, you acknowledge that you have read and understood this Privacy Policy and agree to its terms and conditions."
+  "By using the “Mental Movement” app, you acknowledge that you have read and understood this Privacy Policy and agree to its terms and conditions.": "By using the “Mental Movement” app, you acknowledge that you have read and understood this Privacy Policy and agree to its terms and conditions.",
+  "germanMale": "Male",
+  "femaleGermal": "Female",
+  "Voice": "Voice",
+  "Subscribe Now": "Subscribe Now"
 }
