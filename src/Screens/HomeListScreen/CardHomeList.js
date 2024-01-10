@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Image, Text } from 'react-native';
 import { SelfEsteemCardPlayer } from '../../assets/images';
 import { colors, fonts } from '../../constants';
 import style from '../../assets/css/style';
+import { useTranslation } from 'react-i18next';
 
 const CardHomeList = ({
   title,
@@ -16,6 +17,7 @@ const CardHomeList = ({
   voice,
   duration,
 }) => {
+  const { t } = useTranslation()
   // console.log(topicData);
   return (
     <TouchableOpacity
@@ -36,7 +38,7 @@ const CardHomeList = ({
           justifyContent: 'space-between',
         }}>
         <Image
-          source={require('../../assets/images/SelfExteemCard.png')}
+          source={require('../../assets/Sportpicture.png')}
           style={{ height: 72, width: 72, borderRadius: 10, marginLeft: 4 }}
         />
         <View
@@ -59,7 +61,7 @@ const CardHomeList = ({
                 style.font10Re,
                 { color: colors.black, fontFamily: fonts.bold },
               ]}>
-              {voice} Voice{' '}
+              {voice} {t("Voice")}{' - '}{duration}
             </Text>
             <Text
               style={[

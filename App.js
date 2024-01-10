@@ -21,7 +21,7 @@ const App = () => {
   return (
     <RootSiblingParent>
       <I18nextProvider i18n={i18n}>
-        <NavigationContainer onReady={() => RNBootSplash.hide()}>
+        <NavigationContainer>
           <RootNavigation />
         </NavigationContainer>
       </I18nextProvider>

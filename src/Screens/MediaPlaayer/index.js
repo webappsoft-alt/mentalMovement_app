@@ -56,7 +56,7 @@ const MediaPlayerAudio = ({ route }) => {
   return (
     <ImageBackground
       {...panResponder.panHandlers}
-      source={require('../../assets/MediaImg/Bg.png')}
+      source={require('../../assets/Sportpicture.png')}
       style={{ flex: 1, alignItems: 'center', padding: 10 }}>
       <FocusAwareStatusBar
         animated={true}

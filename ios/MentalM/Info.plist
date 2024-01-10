@@ -68,17 +68,6 @@
 	<string>Mental Movement needs access to upload files and pictures</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Inter-Black.ttf</string>
-		<string>Inter-Bold.ttf</string>
-		<string>Inter-ExtraBold.ttf</string>
-		<string>Inter-ExtraLight.ttf</string>
-		<string>Inter-Light.ttf</string>
-		<string>Inter-Medium.ttf</string>
-		<string>Inter-Regular.ttf</string>
-		<string>Inter-SemiBold.ttf</string>
-		<string>Inter-Thin.ttf</string>
-		<string>regularroman.ttf</string>
-		<string>timesromanbold.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
@@ -98,6 +87,27 @@
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
+		<string>Gilroy-Bold.ttf</string>
+		<string>Gilroy-ExtraBold.ttf</string>
+		<string>Gilroy-Light.ttf</string>
+		<string>Gilroy-Medium.ttf</string>
+		<string>Gilroy-Regular.ttf</string>
+		<string>Gilroy-SemiBold.ttf</string>
+		<string>Gilroy-Heavy.ttf</string>
+		<string>Gilroy-VariableFont_wght.ttf</string>
+		<string>Gilroy-Black.ttf</string>
+		<string>Gilroy-BlackItalic.ttf</string>
+		<string>Gilroy-BoldItalic.ttf</string>
+		<string>Gilroy-ExtraBoldItalic.ttf</string>
+		<string>Gilroy-HeavyItalic.ttf</string>
+		<string>Gilroy-LightItalic.ttf</string>
+		<string>Gilroy-MediumItalic.ttf</string>
+		<string>Gilroy-RegularItalic.ttf</string>
+		<string>Gilroy-SemiBoldItalic.ttf</string>
+		<string>Gilroy-Thin.ttf</string>
+		<string>Gilroy-ThinItalic.ttf</string>
+		<string>Gilroy-UltraLight.ttf</string>
+		<string>Gilroy-UltraLightItalic.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string></string>
