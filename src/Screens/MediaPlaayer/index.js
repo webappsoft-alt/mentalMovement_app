@@ -6,23 +6,31 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
 import AudioPlayer from './AudioPlayer';
-import { Cross, Infor } from '../../assets/images';
+import {Cross, Infor} from '../../assets/images';
 import style from '../../assets/css/style';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
-import { Volume } from '../../assets/MediaImg';
+import {Volume} from '../../assets/MediaImg';
 import TrackPlayer from 'react-native-track-player';
-import { useNavigation } from '@react-navigation/native';
-
-const MediaPlayerAudio = ({ route }) => {
+import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {colors} from '../../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ApiRequest from '../../services/ApiService';
+const MediaPlayerAudio = ({route}) => {
   const card_Title = route?.params?.card_Title;
   const title = route?.params?.title;
   const voice = route?.params?.voice;
   const audioFile = route?.params?.audioFile;
-  console.log(audioFile, ';;;;;;');
+  const disable = route?.params?.disable;
+
+  const items = route?.params?.items;
+  const [status, setStatus] = useState(route.params?.status);
+
+  console.log(status, 'status;;;;;;');
   const [volume, setVolume] = useState(1.0); // Initial volume level
   const [isDraggingVolume, setIsDraggingVolume] = useState(false);
   const navigation = useNavigation();
@@ -53,11 +61,44 @@ const MediaPlayerAudio = ({ route }) => {
       setIsDraggingVolume(false);
     },
   });
+  const [isLiked, setIsLiked] = useState(status); // State to manage like status
+  const handleLikes = () => {};
+  const heartPress = async item => {
+    const user_id = await AsyncStorage.getItem('user_id');
+    const sendData = {
+      type: 'like_dislike',
+      user_id: user_id,
+      topic_id: items?.topic[0]?.id,
+      cat_id: items?.topic[0]?.category_id,
+      status: status === 'like' ? 'dislike' : 'like',
+    };
+
+    console.log(sendData, 'sendData');
+
+    // let data2 = data.findIndex(x => x.id === item.id);
+    // if (item.favourite == 'like') {
+    //   data[data2].favourite = 'dislike';
+    // } else {
+    //   data[data2].favourite = 'like';
+    // }
+    // setData(data);
+    // setRefresh(pre => !pre);
+    try {
+      setStatus(status === 'like' ? 'dislike' : 'like');
+      // setIsLiked(!isLiked);
+      const res = await ApiRequest(sendData);
+      console.log(res.data, 'likes===--==>>');
+    } catch (error) {
+      setStatus(status === 'like' ? 'dislike' : 'like');
+
+      console.log(error);
+    }
+  };
   return (
     <ImageBackground
       {...panResponder.panHandlers}
       source={require('../../assets/Sportpicture.png')}
-      style={{ flex: 1, alignItems: 'center', padding: 10 }}>
+      style={{flex: 1, alignItems: 'center', padding: 10}}>
       <FocusAwareStatusBar
         animated={true}
         barStyle={'light-content'}
@@ -73,7 +114,38 @@ const MediaPlayerAudio = ({ route }) => {
           padding: 20,
           width: '100%',
         }}>
-        <Text></Text>
+        {disable ? (
+          <View
+            // onPress={heartPress}
+            style={{
+              height: 30,
+              width: 30,
+              backgroundColor: colors.white,
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon name="heart" size={18} color={'black'} />
+          </View>
+        ) : (
+          <TouchableOpacity
+            onPress={heartPress}
+            style={{
+              height: 30,
+              width: 30,
+              backgroundColor: colors.white,
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            {/* <Text>sd</Text> */}
+            <Icon
+              name={status === 'like' ? 'heart' : 'hearto'}
+              size={18}
+              color={'black'}
+            />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Cross />
         </TouchableOpacity>
@@ -89,7 +161,7 @@ const MediaPlayerAudio = ({ route }) => {
         </Text>
         <Text style={{textAlign: 'center'}}>{(volume * 100).toFixed(1)}%</Text>
       </View> */}
-      <View style={{ position: 'absolute', bottom: 10 }}>
+      <View style={{position: 'absolute', bottom: 10}}>
         <AudioPlayer
           title={card_Title}
           subTitle={voice}

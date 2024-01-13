@@ -13,6 +13,7 @@ import Button from '../../components/Button';
 import {BaseButton} from '../../components/BaseButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ApiRequest from '../../services/ApiService';
+import {useTranslation} from 'react-i18next';
 const EditProfile = () => {
   const navigation = useNavigation();
   const [formData, setFormData] = useState({
@@ -103,6 +104,7 @@ const EditProfile = () => {
       console.log(error);
     }
   };
+  const {t} = useTranslation();
   return (
     <Container customStyle={{paddingHorizontal: 0}}>
       <View style={{marginVertical: 20, padding: 10}}>
@@ -112,7 +114,7 @@ const EditProfile = () => {
             style.font28Re,
             {fontFamily: fonts.timenewregularroman, marginTop: 50},
           ]}>
-          Edit Profile
+          {t('Edit Profile')}
         </Text>
       </View>
       <View style={styles.container}>
@@ -126,7 +128,7 @@ const EditProfile = () => {
               marginVertical: 20,
             },
           ]}>
-          Profile
+          {t('Profile')}
         </Text>
 
         <InputBox
@@ -167,7 +169,7 @@ const EditProfile = () => {
               isLoading1 ? (
                 <ActivityIndicator color={colors.white} />
               ) : (
-                'Update Profile'
+                t('Update Profile')
               )
             }
             onPress={handleUpdateData}

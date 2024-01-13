@@ -12,6 +12,7 @@ import style from '../../assets/css/style';
 import Button from '../../components/Button';
 import {BaseButton} from '../../components/BaseButton';
 import {validatePassword} from '../../utils/Validations';
+import {useTranslation} from 'react-i18next';
 const ChnagePassword = () => {
   const navigation = useNavigation();
   const [formData, setFormData] = useState({
@@ -65,6 +66,8 @@ const ChnagePassword = () => {
     }
   };
 
+  const {t} = useTranslation();
+
   return (
     <Container customStyle={{paddingHorizontal: 0}}>
       <View style={{marginVertical: 20, padding: 10}}>
@@ -74,7 +77,7 @@ const ChnagePassword = () => {
             style.font28Re,
             {fontFamily: fonts.timenewregularroman, marginTop: 50},
           ]}>
-          Change Password
+          {t('Change Password')}
         </Text>
       </View>
       <View style={styles.container}>
@@ -88,7 +91,7 @@ const ChnagePassword = () => {
               marginVertical: 20,
             },
           ]}>
-          New Password
+          {t('New Password')}
         </Text>
         <InputBox
           notShow

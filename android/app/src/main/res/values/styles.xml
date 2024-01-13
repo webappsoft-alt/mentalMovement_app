@@ -1,17 +1,30 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:editTextBackground">@android:color/transparent</item>
-    </style>
-  <!-- BootTheme should inherit from Theme.BootSplash or Theme.BootSplash.EdgeToEdge -->
-  <style name="BootTheme" parent="Theme.BootSplash">
-    <!-- <item name="bootSplashBackground">@color/bootsplash_background</item> -->
-    <item name="android:windowBackground">@drawable/splashscreen</item>
 
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+    </style>
+
+  <!-- BootTheme should inherit from Theme.BootSplash or Theme.BootSplash.EdgeToEdge -->
+
+  <style name="BootTheme" parent="Theme.BootSplash">
+    <item name="bootSplashBackground">@color/bootsplash_background</item>
+    <item name="bootSplashLogo">@drawable/bootsplash_logo</item>
     <item name="postBootSplashTheme">@style/AppTheme</item>
-  </style>
+    <!-- Add statusBarColor -->
+   <item name="android:statusBarColor">#000000</item>
+    <!-- Add statusBar Content Color -->
+  <!-- <item name="android:windowLightStatusBar">true</item> -->
+
+     <!-- Enable fullscreen and hide the status bar -->
+    <!-- <item name="android:windowFullscreen">true</item> -->
+    <!-- <item name="android:windowContentOverlay">@null</item> -->
+
+    <!-- Set your desired color as the background -->
+    <!-- <item name="android:windowBackground">#18173C</item> -->
+
+
+</style>
 
 </resources>
-
-

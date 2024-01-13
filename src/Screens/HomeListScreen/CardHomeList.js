@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, Text } from 'react-native';
-import { SelfEsteemCardPlayer } from '../../assets/images';
-import { colors, fonts } from '../../constants';
+import {View, TouchableOpacity, Image, Text} from 'react-native';
+import {SelfEsteemCardPlayer} from '../../assets/images';
+import {colors, fonts} from '../../constants';
 import style from '../../assets/css/style';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const CardHomeList = ({
   title,
@@ -17,8 +17,8 @@ const CardHomeList = ({
   voice,
   duration,
 }) => {
-  const { t } = useTranslation()
-  // console.log(topicData);
+  const {t} = useTranslation();
+  // console.log(topicData, 'topic data');
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -39,7 +39,7 @@ const CardHomeList = ({
         }}>
         <Image
           source={require('../../assets/Sportpicture.png')}
-          style={{ height: 72, width: 72, borderRadius: 10, marginLeft: 4 }}
+          style={{height: 72, width: 72, borderRadius: 10, marginLeft: 4}}
         />
         <View
           style={{
@@ -55,25 +55,27 @@ const CardHomeList = ({
             }}>
             {card_Title}
           </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text
               style={[
                 style.font10Re,
-                { color: colors.black, fontFamily: fonts.bold },
+                {color: colors.black, fontFamily: fonts.bold},
               ]}>
-              {voice} {t("Voice")}{' - '}{duration}
+              {voice} {t('Voice')}
+              {' - '}
+              {duration}
             </Text>
             <Text
               style={[
                 style.font10Re,
-                { color: colors.black, fontFamily: fonts.bold },
+                {color: colors.black, fontFamily: fonts.bold},
               ]}>
               {/* - {duration} */}
             </Text>
           </View>
         </View>
       </View>
-      <View style={{ marginRight: 14 }}>
+      <View style={{marginRight: 14}}>
         <SelfEsteemCardPlayer />
       </View>
     </TouchableOpacity>

@@ -261,6 +261,7 @@ const AppTextInput = ({
         }}>
         <TextInput
           placeholder={placeholder}
+          placeholderTextColor={colors.gray}
           onEndEditing={onEndEditing}
           value={value}
           onChangeText={onChangeText}

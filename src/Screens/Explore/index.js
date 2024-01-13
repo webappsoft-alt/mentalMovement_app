@@ -8,24 +8,25 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
+  Image,
   ActivityIndicator,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Container from '../../components/Container';
-import { AppLogo, Drawer, Heart } from '../../assets/images';
+import {AppLogo, Drawer, Heart, Logo_MentalMovement} from '../../assets/images';
 import style from '../../assets/css/style';
-import { colors, fonts } from '../../constants';
-import { useNavigation } from '@react-navigation/native';
+import {colors, fonts} from '../../constants';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ExploreCard from './ExploreCard';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import ApiRequest from '../../services/ApiService';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Explore = () => {
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const TOPICS = [
     {
       id: '1',
@@ -71,7 +72,7 @@ const Explore = () => {
   return (
     <ImageBackground
       source={require('../../assets/images/png/start_img.png')}
-      style={{ flex: 1 }}>
+      style={{flex: 1}}>
       <FocusAwareStatusBar
         animated={true}
         barStyle={'light-content'}
@@ -97,8 +98,11 @@ const Explore = () => {
             <Drawer />
           </TouchableOpacity>
 
-          <AppLogo />
-
+          <Image
+            source={Logo_MentalMovement}
+            style={{width: 180, height: 80}}
+            resizeMode="center"
+          />
           <Heart />
         </View>
         <View
@@ -122,24 +126,25 @@ const Explore = () => {
         {isLoading ? (
           <ActivityIndicator color={colors.white} />
         ) : (
-          <View style={{ flex: 1, paddingBottom: Platform.OS == 'android' ? 80 : 0 }}>
+          <View
+            style={{flex: 1, paddingBottom: Platform.OS == 'android' ? 10 : 0}}>
             <FlatList
               data={data}
               keyExtractor={item => item.id}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <ExploreCard
                   items={item}
                   leng={leng}
-                // title={item.name}
-                // time={item.time}
-                // onPress={() =>
-                //   navigation.navigate('MainStack', {
-                //     screen: 'ExploreTraning',
-                //     params: {
-                //       heading: t('Traning Days'),
-                //     },
-                //   })
-                // }
+                  // title={item.name}
+                  // time={item.time}
+                  // onPress={() =>
+                  //   navigation.navigate('MainStack', {
+                  //     screen: 'ExploreTraning',
+                  //     params: {
+                  //       heading: t('Traning Days'),
+                  //     },
+                  //   })
+                  // }
                 />
               )}
             />

@@ -1,11 +1,7 @@
-import {
-  StyleSheet,
-  View,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View, Platform} from 'react-native';
 import React from 'react';
-import { WebView } from 'react-native-webview';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {WebView} from 'react-native-webview';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 const AboutUs = () => {
   const webviewBackgroundColorScript = `
   const style = document.createElement('style');
@@ -13,10 +9,10 @@ const AboutUs = () => {
   document.head.appendChild(style);
 `;
   return (
-    <View style={{ flex: 1, backgroundColor: 'black', paddingHorizontal: 16 }}>
+    <View style={{flex: 1, backgroundColor: 'black', paddingHorizontal: 16}}>
       <WebView
         source={{
-          uri: 'https://www.mental-movement.de/keynote-speaker/',
+          uri: 'https://www.mental-movement.de/',
         }}
         style={{
           flex: 1,

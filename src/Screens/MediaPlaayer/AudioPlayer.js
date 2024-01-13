@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import TrackPlayer, { Event, State } from 'react-native-track-player';
+import TrackPlayer, {Event, State} from 'react-native-track-player';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNFS from 'react-native-fs';
@@ -24,18 +24,18 @@ import {
   Share,
   Volume,
 } from '../../assets/MediaImg';
-import { Cross, Heart, Infor, PauseSvg, PlaySvg } from '../../assets/images';
+import {Cross, Heart, Infor, PauseSvg, PlaySvg} from '../../assets/images';
 import style from '../../assets/css/style';
-import { colors, fonts } from '../../constants';
+import {colors, fonts} from '../../constants';
 import Slider from 'react-native-slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ToastMessage } from '../../utils/Toast';
-import { decode, encode } from 'base-64';
-import { useFocusEffect } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
+import {ToastMessage} from '../../utils/Toast';
+import {decode, encode} from 'base-64';
+import {useFocusEffect} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
-const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
-  const { t } = useTranslation()
+const AudioPlayer = ({title, volume, subTitle, audioFile, setVolume}) => {
+  const {t} = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -49,7 +49,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
       const ArrNew = JSON.parse(pathData);
       const storedArray = [...ArrNew];
       const isExsit = storedArray.some(
-        storeObj => storeObj.name == audioFile.split('/').pop(),
+        storeObj => storeObj?.name == audioFile.split('/').pop(),
       );
       if (isExsit) {
         const filterPath = storedArray.filter(
@@ -90,6 +90,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
       url: audioUrl,
       title: 'Track 1',
       artist: 'Artist 1',
+      // artwork: require('../../assets/images/img/RESTDAYRUHETAG.jpg'),
     });
 
     // Start playback if the component is still mounted
@@ -225,13 +226,27 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
       if (pathData) {
         const ArrNew = JSON.parse(pathData);
         const updatedArraay = [...ArrNew];
-        updatedArraay.push({ path: filePath, name: filename, card_Title: title, title: volume, voice: subTitle, audioFile: audioFile });
+        updatedArraay.push({
+          path: filePath,
+          name: filename,
+          card_Title: title,
+          title: volume,
+          voice: subTitle,
+          audioFile: audioFile,
+        });
         ToastMessage('Downloaded successfully completed');
         await AsyncStorage.setItem('filePath', JSON.stringify(updatedArraay));
         setDownloadedFilePath(filePath);
         setDownloadMsg(false);
       } else {
-        Arr.push({ path: filePath, name: filename, card_Title: title, title: volume, voice: subTitle, audioFile: audioFile });
+        Arr.push({
+          path: filePath,
+          name: filename,
+          card_Title: title,
+          title: volume,
+          voice: subTitle,
+          audioFile: audioFile,
+        });
         const dataToStore = JSON.stringify(Arr);
         await AsyncStorage.setItem('filePath', dataToStore);
         setDownloadedFilePath(filePath);
@@ -285,7 +300,14 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
           if (pathData) {
             const ArrNew = JSON.parse(pathData);
             const updatedArraay = [...ArrNew];
-            updatedArraay.push({ path: localFile, name: filename, card_Title: title, title: volume, voice: subTitle, audioFile: audioFile });
+            updatedArraay.push({
+              path: localFile,
+              name: filename,
+              card_Title: title,
+              title: volume,
+              voice: subTitle,
+              audioFile: audioFile,
+            });
             ToastMessage('Downloaded successfully completed');
             setDownloadMsg(false);
             await AsyncStorage.setItem(
@@ -294,7 +316,14 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
             );
             setDownloadedFilePath(localFile);
           } else {
-            Arr.push({ path: localFile, name: filename, card_Title: title, title: volume, voice: subTitle, audioFile: audioFile });
+            Arr.push({
+              path: localFile,
+              name: filename,
+              card_Title: title,
+              title: volume,
+              voice: subTitle,
+              audioFile: audioFile,
+            });
             const dataToStore = JSON.stringify(Arr);
             await AsyncStorage.setItem('filePath', dataToStore);
 
@@ -313,11 +342,11 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ marginLeft: 20, top: -50 }}>
-        <Text style={[style.font16Re, { fontFamily: fonts.bold }]}>{title}</Text>
-        <Text style={[style.font16Re, { fontFamily: fonts.bold }]}>
-          {subTitle} {t("Voice")}
+    <View style={{flex: 1}}>
+      <View style={{marginLeft: 20, top: -50}}>
+        <Text style={[style.font16Re, {fontFamily: fonts.bold}]}>{title}</Text>
+        <Text style={[style.font16Re, {fontFamily: fonts.bold}]}>
+          {subTitle} {t('Voice')}
         </Text>
       </View>
 
@@ -333,7 +362,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
         <Text style={[style.font16Re]}>{formatTime(position)}</Text>
 
         <Slider
-          style={{ width: '70%', alignSelf: 'center', marginHorizontal: 10 }}
+          style={{width: '70%', alignSelf: 'center', marginHorizontal: 10}}
           minimumValue={0}
           maximumValue={duration}
           value={position}
@@ -347,7 +376,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
         />
         <Text style={[style.font16Re]}>{formatTime(duration)}</Text>
       </View>
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <View
           style={{
             flexDirection: 'row',
@@ -356,7 +385,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
             width: '90%',
             alignSelf: 'center',
           }}>
-          <TouchableOpacity onPress={toggleMute} style={{ width: 40 }}>
+          <TouchableOpacity onPress={toggleMute} style={{width: 40}}>
             {isMuted ? mutedIcon : unmutedIcon}
           </TouchableOpacity>
           <View
@@ -394,7 +423,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
                     }}>
                     <Image
                       source={require('../../assets/Pausebutton.png')}
-                      style={{ height: 30, width: 30 }}
+                      style={{height: 30, width: 30}}
                       resizeMode="center"
                     />
                   </ImageBackground>
@@ -409,7 +438,7 @@ const AudioPlayer = ({ title, volume, subTitle, audioFile, setVolume }) => {
                     }}>
                     <Image
                       source={require('../../assets/Palybutton.png')}
-                      style={{ height: 30, width: 30 }}
+                      style={{height: 30, width: 30}}
                       resizeMode="center"
                     />
                   </ImageBackground>

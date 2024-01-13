@@ -6,7 +6,8 @@
   "Privacy Policy": "Privacy Policy",
   "Downloads": "Downloads",
   "About US": "About US",
-
+  "Favourite Music": "Favourite Music",
+  "Music": "Music",
   "Settings": "Settings",
   "Version": "Version 9.3.2.1",
   "Logout": "Logout",
@@ -75,6 +76,8 @@
   "Confirm Password": "Confirm Password",
   "trial": "Use Trial for 7 days Free",
   "subscripiton": "You must obtain a subscription plan in order to access and utilize that particular service, as you are not currently subscribed to it.",
+  "Update Profile": "Update Profile",
+  "Profile": "Profile",
 
   "Reset Password with Email": "Reset Password with Email",
   "Verify Email": "Verify Email",

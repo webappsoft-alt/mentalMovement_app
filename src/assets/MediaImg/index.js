@@ -8,3 +8,8 @@ export {default as Share} from '../MediaImg/Share.svg';
 export {default as More} from '../MediaImg/More.svg';
 export {default as Download} from '../MediaImg/Download.svg';
 export {default as GoogleLog} from '../MediaImg/GoogleLog.svg';
+export {default as TRAININGSTAG} from '../MediaImg/TRAININGSTAG.png';
+export {default as WETTKAMPFTAG} from '../MediaImg/WETTKAMPFTAG.png';
+export {default as RUHETAG} from '../MediaImg/RUHETAG.png';
+export {default as LIVE} from '../MediaImg/LIVE.png';
+export {default as HOME} from '../MediaImg/HOME.png';

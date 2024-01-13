@@ -14,3 +14,4 @@ export {default as Users} from '../images/Users.svg';
 export {default as Heart} from '../images/Heart.svg';
 export {default as PauseSvg} from '../images/PauseSvg.svg';
 export {default as PlaySvg} from '../images/PlaySvg.svg';
+export {default as Logo_MentalMovement} from '../images/Logo_MentalMovement.png';

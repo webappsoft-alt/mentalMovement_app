@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, {useState, useMemo} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -10,18 +10,18 @@ import {
 } from 'react-native';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
-import { colors, fonts } from '../../constants';
-import { useNavigation } from '@react-navigation/native';
+import {colors, fonts} from '../../constants';
+import {useNavigation} from '@react-navigation/native';
 import InputBox from '../../components/InputBox';
 import Footer from '../../components/Footer';
 import style from '../../assets/css/style';
 import Button from '../../components/Button';
-import { Email, FbLogin, Users } from '../../assets/images';
-import { BaseButton } from '../../components/BaseButton';
-import { validateEmail } from '../../utils/Validations';
-import { ToastMessage } from '../../utils/Toast';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
+import {Email, FbLogin, Users} from '../../assets/images';
+import {BaseButton} from '../../components/BaseButton';
+import {validateEmail} from '../../utils/Validations';
+import {ToastMessage} from '../../utils/Toast';
+import {t} from 'i18next';
+import {useTranslation} from 'react-i18next';
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {
@@ -30,9 +30,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //   LoginManager,
 //   AccessToken,
 // } from 'react-native-fbsdk-next';
-import { GoogleLog } from '../../assets/MediaImg';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import appleAuth, { AppleButton } from '@invertase/react-native-apple-authentication';
+import {GoogleLog} from '../../assets/MediaImg';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import appleAuth, {
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -84,20 +89,22 @@ const Login = () => {
 
         navigation.reset({
           index: 0,
-          routes: [{
-            name: 'MainStack',
-            state: {
-              routes: [
-                {
-                  name: "AppStack",
-                }
-              ]
-            }
-          }]
-        })
+          routes: [
+            {
+              name: 'MainStack',
+              state: {
+                routes: [
+                  {
+                    name: 'AppStack',
+                  },
+                ],
+              },
+            },
+          ],
+        });
 
         setIsLoading(false);
-        setFormData({ email: '', password: '' });
+        setFormData({email: '', password: ''});
       } else {
         console.log('3');
         ToastMessage(res.data?.message);
@@ -114,13 +121,16 @@ const Login = () => {
       setIsLoading1('google');
       // Check for Google Play Services
       GoogleSignin.configure({
-        webClientId: '319958759561-ks499rmr0a8103urgc8v0lgargbk1ab1.apps.googleusercontent.com',
+        webClientId:
+          '319958759561-ks499rmr0a8103urgc8v0lgargbk1ab1.apps.googleusercontent.com',
         offlineAccess: true,
       });
-      await GoogleSignin.hasPlayServices({ autoResolve: true, showPlayServicesUpdateDialog: true });
+      await GoogleSignin.hasPlayServices({
+        autoResolve: true,
+        showPlayServicesUpdateDialog: true,
+      });
 
       const userInfo = await GoogleSignin.signIn();
-
 
       const UserEmail = userInfo?.user?.email;
       console.log(UserEmail, 'email');
@@ -134,21 +144,23 @@ const Login = () => {
           const id = JSON.stringify(res?.data?.user_id);
           await AsyncStorage.setItem('user_id', id);
           await AsyncStorage.setItem('name', res.data.name);
-          await GoogleSignin.signOut()
+          await GoogleSignin.signOut();
           ToastMessage(res?.data?.message);
           navigation.reset({
             index: 0,
-            routes: [{
-              name: 'MainStack',
-              state: {
-                routes: [
-                  {
-                    name: "AppStack",
-                  }
-                ]
-              }
-            }]
-          })
+            routes: [
+              {
+                name: 'MainStack',
+                state: {
+                  routes: [
+                    {
+                      name: 'AppStack',
+                    },
+                  ],
+                },
+              },
+            ],
+          });
         }
       } else {
         ToastMessage('No user exsit');
@@ -224,7 +236,9 @@ const Login = () => {
 
     // get current authentication state for user
     // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
 
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
@@ -240,29 +254,31 @@ const Login = () => {
         ToastMessage(res?.data?.message);
         navigation.reset({
           index: 0,
-          routes: [{
-            name: 'MainStack',
-            state: {
-              routes: [
-                {
-                  name: "AppStack",
-                }
-              ]
-            }
-          }]
-        })
+          routes: [
+            {
+              name: 'MainStack',
+              state: {
+                routes: [
+                  {
+                    name: 'AppStack',
+                  },
+                ],
+              },
+            },
+          ],
+        });
       }
     }
   }
 
   return (
-    <Container customStyle={{ paddingHorizontal: 0 }}>
-      <View style={{ marginVertical: 20, padding: 10 }}>
+    <Container customStyle={{paddingHorizontal: 0}}>
+      <View style={{marginVertical: 20, padding: 10}}>
         <AuthHeader />
         <Text
           style={[
             style.font28Re,
-            { fontFamily: fonts.timenewregularroman, marginTop: 50 },
+            {fontFamily: fonts.timenewregularroman, marginTop: 50},
           ]}>
           {t("Let's get started")}
         </Text>
@@ -271,8 +287,8 @@ const Login = () => {
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={{ flex: 1 }}>
+          contentContainerStyle={{flexGrow: 1}}>
+          <View style={{flex: 1}}>
             <Text
               style={[
                 style.font20Re,
@@ -292,7 +308,7 @@ const Login = () => {
               placeholder={'Email'}
               value={formData.email}
               onChangeText={text => {
-                setFormData({ ...formData, email: text });
+                setFormData({...formData, email: text});
               }}
               Icon={() => <Email />}
             />
@@ -302,7 +318,7 @@ const Login = () => {
               placeholder={'Password'}
               value={formData.password}
               onChangeText={text => {
-                setFormData({ ...formData, password: text });
+                setFormData({...formData, password: text});
               }}
               isEye={true}
               onEyePress={onEyePress}
@@ -319,7 +335,7 @@ const Login = () => {
                 <Text
                   style={[
                     style.font12Re,
-                    { color: '#A10000', fontFamily: fonts.bold },
+                    {color: '#A10000', fontFamily: fonts.bold},
                   ]}>
                   {t('Forgot Password')}
                 </Text>
@@ -335,18 +351,18 @@ const Login = () => {
                 )
               }
               onPress={handleLogin}
-              disabled={disable}
-              defaultStyle={{ width: '80%', marginVertical: 24 }}
-            // onPress={() =>
-            //   navigation.navigate('MainStack', {screen: 'AppStack'})
-            // }
+              disabled={disable || isLoading}
+              defaultStyle={{width: '80%', marginVertical: 24}}
+              // onPress={() =>
+              //   navigation.navigate('MainStack', {screen: 'AppStack'})
+              // }
             />
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Signup');
               }}
-              style={{ alignSelf: 'center', marginBottom: 30 }}>
-              <Text style={[style.font14Re, { color: colors.black }]}>
+              style={{alignSelf: 'center', marginBottom: 30}}>
+              <Text style={[style.font14Re, {color: colors.black}]}>
                 {t("Don't have an account?")}{' '}
                 <Text
                   style={[
@@ -368,17 +384,17 @@ const Login = () => {
                 justifyContent: 'space-around',
               }}>
               <View
-                style={{ height: 1, width: 100, backgroundColor: colors.black }}
+                style={{height: 1, width: 100, backgroundColor: colors.black}}
               />
               <Text
                 style={[
                   style.font14Re,
-                  { color: colors.black, fontFamily: fonts.bold },
+                  {color: colors.black, fontFamily: fonts.bold},
                 ]}>
                 OR
               </Text>
               <View
-                style={{ height: 1, width: 100, backgroundColor: colors.black }}
+                style={{height: 1, width: 100, backgroundColor: colors.black}}
               />
             </View>
 
@@ -415,7 +431,8 @@ const Login = () => {
                     height: 45, // You must specify a height
                   }}
                   onPress={() => onAppleButtonPress()}
-                />)}
+                />
+              )}
               {/* <TouchableOpacity
                 onPress={handleCustomLoginFB}
                 style={[styles.box, { marginTop: 0 }]}>
@@ -433,7 +450,7 @@ const Login = () => {
                 </Text>
               </TouchableOpacity> */}
             </View>
-            <Footer agreed={false} textStyle={{ color: colors.black }} />
+            <Footer agreed={false} textStyle={{color: colors.black}} />
           </View>
         </ScrollView>
       </View>
