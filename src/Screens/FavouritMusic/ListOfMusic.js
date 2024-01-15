@@ -21,6 +21,7 @@ const ListOfMusic = () => {
   const category = route?.params?.category;
   const topic = route?.params?.topic;
   const lang = route?.params?.lang;
+  const status = route?.params?.status;
   console.log(item.profile_url, '!@#$%^&*((*&^%$#@#^&%$#@#$%^');
   const {t} = useTranslation();
   return (
@@ -66,6 +67,8 @@ const ListOfMusic = () => {
                 screen: 'MediaPlayerAudio',
 
                 params: {
+                  itemsFav: item,
+                  topicFav: topic,
                   disable: 'disable',
                   title:
                     lang === 'es'
@@ -97,6 +100,8 @@ const ListOfMusic = () => {
                 screen: 'MediaPlayerAudio',
 
                 params: {
+                  itemsFav: item,
+                  topicFav: topic,
                   disable: 'disable',
                   title:
                     lang === 'es'
@@ -108,7 +113,7 @@ const ListOfMusic = () => {
                       : item?.category?.name_german,
                   voice: t('femaleGermal'),
                   status: item?.status,
-                  audioFile: topic?.profile_url + topic?.audio_file_male,
+                  audioFile: item?.profile_url + topic?.audio_file_male,
                 },
               });
         }}

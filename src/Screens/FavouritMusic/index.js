@@ -16,7 +16,7 @@ import {useTranslation} from 'react-i18next';
 import {ToastMessage} from '../../utils/Toast';
 import ApiRequest from '../../services/ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import style from '../../assets/css/style';
 import {colors, fonts} from '../../constants';
 import {BackArrow} from '../../assets/images';
@@ -49,9 +49,10 @@ const FavouriteMusic = () => {
       console.log(error);
     }
   };
+  const isFocused = useIsFocused();
   useEffect(() => {
     handleGetMusicFav();
-  }, []);
+  }, [isFocused]);
 
   return (
     <View
@@ -128,6 +129,8 @@ const FavouriteMusic = () => {
                     item: item,
                     topic: item?.topics,
                     category: item?.category,
+                    status: item.status,
+
                     // audioFile:
                     //   topicData?.profile_url + topicData?.audio_file_male,
                   },

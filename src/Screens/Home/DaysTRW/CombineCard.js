@@ -25,8 +25,9 @@ const CombineCard = ({
   const topics = topic && topic[0];
   // console.log(topics?.favourite, 'item====>>.');
   return (
-    <View style={{}}>
+    <>
       <TouchableOpacity
+        style={{width: '48%'}}
         onPress={() => {
           if (topics?.audio_file_female == undefined) {
             ToastMessage('There is no currently file present in this category');
@@ -57,7 +58,8 @@ const CombineCard = ({
                   flex: 1,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: 155,
+                  width: '100%',
+
                   borderRadius: 15,
                   paddingTop: Platform.OS == 'ios' ? getStatusBarHeight() : 0,
                 }}>
@@ -74,7 +76,8 @@ const CombineCard = ({
               paddingHorizontal: 12,
               flex: 1,
               borderRadius: 15,
-              width: 155,
+              width: '100%',
+
               height: 110,
 
               alignItems: 'center',
@@ -138,7 +141,7 @@ const CombineCard = ({
           );
         }}
       /> */}
-    </View>
+    </>
   );
 };
 
@@ -147,7 +150,7 @@ export default CombineCard;
 const styles = StyleSheet.create({
   imageBackground: {
     height: 110,
-    width: 155,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,

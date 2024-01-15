@@ -27,10 +27,14 @@ const MediaPlayerAudio = ({route}) => {
   const audioFile = route?.params?.audioFile;
   const disable = route?.params?.disable;
 
+  const items1 = route?.params?.items;
+  const itemsFav = route?.params?.itemsFav;
+  const topicFav = route?.params?.topicFav;
   const items = route?.params?.items;
   const [status, setStatus] = useState(route.params?.status);
 
-  console.log(status, 'status;;;;;;');
+  // console.log(itemsFav?.cat_id, 'items;;;;;;');
+  console.log(itemsFav, 'status;;;;;;');
   const [volume, setVolume] = useState(1.0); // Initial volume level
   const [isDraggingVolume, setIsDraggingVolume] = useState(false);
   const navigation = useNavigation();
@@ -62,27 +66,18 @@ const MediaPlayerAudio = ({route}) => {
     },
   });
   const [isLiked, setIsLiked] = useState(status); // State to manage like status
-  const handleLikes = () => {};
+
   const heartPress = async item => {
     const user_id = await AsyncStorage.getItem('user_id');
     const sendData = {
       type: 'like_dislike',
       user_id: user_id,
-      topic_id: items?.topic[0]?.id,
-      cat_id: items?.topic[0]?.category_id,
+      topic_id: items ? items?.topic[0]?.id : topicFav?.id,
+      cat_id: items ? items?.topic[0]?.category_id : itemsFav?.cat_id,
       status: status === 'like' ? 'dislike' : 'like',
     };
 
     console.log(sendData, 'sendData');
-
-    // let data2 = data.findIndex(x => x.id === item.id);
-    // if (item.favourite == 'like') {
-    //   data[data2].favourite = 'dislike';
-    // } else {
-    //   data[data2].favourite = 'like';
-    // }
-    // setData(data);
-    // setRefresh(pre => !pre);
     try {
       setStatus(status === 'like' ? 'dislike' : 'like');
       // setIsLiked(!isLiked);
@@ -114,38 +109,24 @@ const MediaPlayerAudio = ({route}) => {
           padding: 20,
           width: '100%',
         }}>
-        {disable ? (
-          <View
-            // onPress={heartPress}
-            style={{
-              height: 30,
-              width: 30,
-              backgroundColor: colors.white,
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Icon name="heart" size={18} color={'black'} />
-          </View>
-        ) : (
-          <TouchableOpacity
-            onPress={heartPress}
-            style={{
-              height: 30,
-              width: 30,
-              backgroundColor: colors.white,
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            {/* <Text>sd</Text> */}
-            <Icon
-              name={status === 'like' ? 'heart' : 'hearto'}
-              size={18}
-              color={'black'}
-            />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          onPress={heartPress}
+          style={{
+            height: 30,
+            width: 30,
+            backgroundColor: colors.white,
+            borderRadius: 15,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          {/* <Text>sd</Text> */}
+          <Icon
+            name={status === 'like' ? 'heart' : 'hearto'}
+            size={18}
+            color={'black'}
+          />
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Cross />
         </TouchableOpacity>
